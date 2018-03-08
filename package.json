@@ -1,0 +1,31 @@
+{
+  "name": "econ",
+  "version": "0.0.0",
+  "description": "Event Collections",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samchon/ecol.git"
+  },
+  "keywords": [
+    "Event",
+    "Collections"
+  ],
+  "author": "Jeongho Nam",
+  "bugs": {
+    "url": "https://github.com/samchon/ecol/issues"
+  },
+  "licenses": [
+    {
+      "type": "BSD-3-Clause",
+      "url": "https://opensource.org/licenses/BSD-3-Clause"
+    }
+  ],
+  "homepage": "https://github.com/samchon/ecol#readme",
+  "dependencies": {
+    "tstl": "~x.x.x"
+  }
+}
