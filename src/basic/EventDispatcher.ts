@@ -9,6 +9,9 @@ export class EventDispatcher<T,
 		ReverseT extends std.base.ReverseIterator<T, SourceT, IteratorT, ReverseT>>
 	implements IEventDispatcher<T, SourceT, IteratorT, ReverseT>
 {
+	/**
+	 * @hidden
+	 */
 	private listeners_: std.HashMap<string, std.HashSet<CollectionEvent.Listener<T, SourceT, IteratorT, ReverseT>>>;
 
 	public constructor()

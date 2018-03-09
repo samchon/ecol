@@ -65,6 +65,8 @@ function process_tasks(task_list: Task[], container: econ.List<number>): std.Vec
 				container.insert(it, std.begin(elements), std.end(elements));
 			}
 		}
+		else if (task[0] == "set")
+			it.value = task[2];
 		else
 		{
 			let last = std.advance(container.begin(), task[2]);
@@ -84,10 +86,12 @@ export function test_linear_containers(): void
 		["erase", 17, 41], // 100 - (41 - 17) = 76
 		["insert", 35, 9], // 76 + 9 = 85
 		["insert", 9, 50], // 85 + 50 = 135
+		["set", 15, 4],
 		["refresh", 27, 63], // 135
 		["erase", 50, 110], // 135 - (110 - 50) = 75
 		["insert", 0, 200], // 75 + 200 = 275
 		["insert", 3, 4], // 275 + 4 = 279
+		["set", 210, 1],
 		["erase", 40, 100], // 279 - (100 - 40) = 219
 		["refresh", 0, 50] // 219
 	];
