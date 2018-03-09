@@ -6,7 +6,7 @@
     "email": "samchon@samchon.org",
     "url": "http://samchon.org"
   },
-  "version": "0.0.0-dev.20180309",
+  "version": "0.0.0",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
@@ -14,7 +14,7 @@
     "test": "node lib/tests"
   },
   "dependencies": {
-    "tstl": "^1.7.4-dev.20180309-2"
+    "tstl": "x.x.x"
   },
   "homepage": "https://github.com/samchon/ecol",
   "repository": {
