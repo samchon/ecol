@@ -1,25 +1,19 @@
 import * as std from "tstl";
+import {EventDispatcher} from "../basic/EventDispatcher";
 
-export class _MapElementList<Key, T, Source extends std.base.MapContainer<Key, T, Source>>
-	extends std.base._MapElementList<Key, T, Source>
+Object.defineProperty(std.base.MapIterator.prototype, "second",
 {
-	protected _Create_iterator(prev: std.base.MapIterator<Key, T, Source>, next: std.base.MapIterator<Key, T, Source>, val: std.Entry<Key, T>): std.base.MapIterator<Key, T, Source>
-	{
-		return new MapIterator(<any>this.associative(), prev, next,val);
-	}
-}
-
-export class MapIterator<Key, T, Source extends std.base.MapContainer<Key, T, Source>>
-	extends std.base.MapIterator<Key, T, Source>
-{
-	public get second(): T
+	get: function () 
 	{
 		return this.value.second;
-	}
-
-	public set second(val: T)
+	},
+	set: function (val) 
 	{
 		this.value.second = val;
-		(this.source() as any).refresh(this);
-	}
-}
+
+		if (this.source().dispatcher_ instanceof EventDispatcher)
+			this.source().refresh(this);
+	},
+	enumerable: true,
+	configurable: true
+});

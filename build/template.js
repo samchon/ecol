@@ -2,10 +2,10 @@ const fs = require("fs");
 
 function manipulate(path, derives)
 {
-	let content = fs.readFileSync(path + "/template", "utf8");
+	let content = fs.readFileSync(path + "/source.ts.template", "utf8");
 	for (let type of derives)
 	{
-		let my_content = content.split("Type").join(type);
+		let my_content = content.split("Source").join(type);
 		fs.writeFileSync(`${path}/${type}.ts`, my_content, "utf8");
 	}
 }

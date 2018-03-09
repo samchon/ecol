@@ -158,7 +158,8 @@ export class VectorBoolean
 	 */
 	public dispatchEvent(event: VectorBoolean.Event): void
 	{
-		this.dispatcher_.dispatchEvent(event);
+		if (this.dispatcher_)
+			this.dispatcher_.dispatchEvent(event);
 	}
 
 	/**
@@ -214,3 +215,14 @@ export namespace VectorBoolean
 	export import Iterator = std.VectorBoolean.Iterator;
 	export import ReverseIterator = std.VectorBoolean.ReverseIterator;
 }
+
+const old_swap = std.VectorBoolean.prototype.swap;
+std.VectorBoolean.prototype.swap = function (obj: std.VectorBoolean): void
+{
+	old_swap.call(this, obj);
+
+	if (this instanceof VectorBoolean)
+		this.refresh();
+	if (obj instanceof VectorBoolean)
+		obj.refresh();
+};

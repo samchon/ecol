@@ -4,22 +4,22 @@ import {ICollection} from "../basic/ICollection";
 import {CollectionEvent} from "../basic/CollectionEvent";
 import {EventDispatcher} from "../basic/EventDispatcher";
 
-import * as internal from "./internal";
+import "./internal";
 
-export class Type<Key, T> 
-	extends std.Type<Key, T>
+export class Source<Key, T> 
+	extends std.Source<Key, T>
 	implements ICollection<std.Entry<Key, T>, 
-		std.Type<Key, T>, 
-		std.Type.Iterator<Key, T>, 
-		std.Type.ReverseIterator<Key, T>>
+		std.Source<Key, T>, 
+		std.Source.Iterator<Key, T>, 
+		std.Source.ReverseIterator<Key, T>>
 {
 	/**
 	 * @hidden
 	 */
 	private dispatcher_: EventDispatcher<std.Entry<Key, T>, 
-		std.Type<Key, T>, 
-		std.Type.Iterator<Key, T>, 
-		std.Type.ReverseIterator<Key, T>> = new EventDispatcher();
+		std.Source<Key, T>, 
+		std.Source.Iterator<Key, T>, 
+		std.Source.ReverseIterator<Key, T>> = new EventDispatcher();
 
 	/* ---------------------------------------------------------
 		CONSTRUCTORS
@@ -35,18 +35,13 @@ export class Type<Key, T>
 		this.dispatchEvent(new CollectionEvent("erase", first, last));
 	}
 
-	protected _Create_element_list(): std.base._MapElementList<Key, T, std.Type<Key, T>>
-	{
-		return new internal._MapElementList(this as std.Type<Key, T>);
-	}
-
 	/* ---------------------------------------------------------
 		ELEMENTS I/O
 	--------------------------------------------------------- */
 	/**
 	 * @hidden
 	 */
-	protected _Handle_insert(first: std.Type.Iterator<Key, T>, last: std.Type.Iterator<Key, T>): void
+	protected _Handle_insert(first: std.Source.Iterator<Key, T>, last: std.Source.Iterator<Key, T>): void
 	{
 		super._Handle_insert(first, last);
 		
@@ -56,7 +51,7 @@ export class Type<Key, T>
 	/**
 	 * @hidden
 	 */
-	protected _Handle_erase(first: std.Type.Iterator<Key, T>, last: std.Type.Iterator<Key, T>): void
+	protected _Handle_erase(first: std.Source.Iterator<Key, T>, last: std.Source.Iterator<Key, T>): void
 	{
 		this._Handle_erase(first, last);
 		
@@ -73,9 +68,10 @@ export class Type<Key, T>
 	/**
 	 * @inheritDoc
 	 */
-	public dispatchEvent(event: Type.Event<Key, T>): void
+	public dispatchEvent(event: Source.Event<Key, T>): void
 	{
-		this.dispatcher_.dispatchEvent(event);
+		if (this.dispatcher_)
+			this.dispatcher_.dispatchEvent(event);
 	}
 
 	/**
@@ -86,14 +82,14 @@ export class Type<Key, T>
 	/**
 	 * @inheritDoc
 	 */
-	public refresh(it: std.Type.Iterator<Key, T>): void;
+	public refresh(it: std.Source.Iterator<Key, T>): void;
 
 	/**
 	 * @inheritDoc
 	 */
-	public refresh(first: std.Type.Iterator<Key, T>, last: std.Type.Iterator<Key, T>): void;
+	public refresh(first: std.Source.Iterator<Key, T>, last: std.Source.Iterator<Key, T>): void;
 
-	public refresh(first: std.Type.Iterator<Key, T> = null, last: std.Type.Iterator<Key, T> = null): void
+	public refresh(first: std.Source.Iterator<Key, T> = null, last: std.Source.Iterator<Key, T> = null): void
 	{
 		if (first == null)
 		{
@@ -120,7 +116,7 @@ export class Type<Key, T>
 	/**
 	 * @inheritDoc
 	 */
-	public addEventListener(type: CollectionEvent.Type, listener: Type.Listener<Key, T>): void
+	public addEventListener(type: CollectionEvent.Type, listener: Source.Listener<Key, T>): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
@@ -128,25 +124,36 @@ export class Type<Key, T>
 	/**
 	 * @inheritDoc
 	 */
-	public removeEventListener(type: CollectionEvent.Type, listener: Type.Listener<Key, T>): void
+	public removeEventListener(type: CollectionEvent.Type, listener: Source.Listener<Key, T>): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
 	}
 }
 
-export namespace Type
+export namespace Source
 {
 	export type Event<Key, T> = CollectionEvent<std.Entry<Key, T>, 
-		std.Type<Key, T>, 
-		std.Type.Iterator<Key, T>, 
-		std.Type.ReverseIterator<Key, T>>;
+		std.Source<Key, T>, 
+		std.Source.Iterator<Key, T>, 
+		std.Source.ReverseIterator<Key, T>>;
 
 	export type Listener<Key, T> = CollectionEvent.Listener<std.Entry<Key, T>, 
-		std.Type<Key, T>, 
-		std.Type.Iterator<Key, T>, 
-		std.Type.ReverseIterator<Key, T>>;
+		std.Source<Key, T>, 
+		std.Source.Iterator<Key, T>, 
+		std.Source.ReverseIterator<Key, T>>;
 
 	export const Event = CollectionEvent;
-	export import Iterator = std.Type.Iterator;
-	export import ReverseIterator = std.Type.ReverseIterator;
+	export import Iterator = std.Source.Iterator;
+	export import ReverseIterator = std.Source.ReverseIterator;
 }
+
+const old_swap = std.Source.prototype.swap;
+std.Source.prototype.swap = function <Key, T>(obj: std.Source<Key, T>): void
+{
+	old_swap.call(this, obj);
+
+	if (this instanceof Source)
+		this.refresh();
+	if (obj instanceof Source)
+		obj.refresh();
+};

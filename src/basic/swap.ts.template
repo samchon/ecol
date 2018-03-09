@@ -1,0 +1,10 @@
+const old_swap = std.Source.prototype.swap;
+std.Source.prototype.swap = function <T>(obj: std.Source<T>): void
+{
+	old_swap.call(this, obj);
+
+	if (this instanceof Source)
+		this.refresh();
+	if (obj instanceof Source)
+		obj.refresh();
+};

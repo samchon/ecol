@@ -155,7 +155,8 @@ export class Deque<T>
 	 */
 	public dispatchEvent(event: Deque.Event<T>): void
 	{
-		this.dispatcher_.dispatchEvent(event);
+		if (this.dispatcher_)
+			this.dispatcher_.dispatchEvent(event);
 	}
 
 	/**
@@ -211,3 +212,14 @@ export namespace Deque
 	export import Iterator = std.Deque.Iterator;
 	export import ReverseIterator = std.Deque.ReverseIterator;
 }
+
+const old_swap = std.Deque.prototype.swap;
+std.Deque.prototype.swap = function <T>(obj: std.Deque<T>): void
+{
+	old_swap.call(this, obj);
+
+	if (this instanceof Deque)
+		this.refresh();
+	if (obj instanceof Deque)
+		obj.refresh();
+};

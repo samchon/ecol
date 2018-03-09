@@ -27,14 +27,6 @@ export class List<T>
 		this._Notify_erase(first, last);
 	}
 
-	/**
-	 * @hidden
-	 */
-	protected _Create_iterator(prev: std.List.Iterator<T>, next: std.List.Iterator<T>, val: T): std.List.Iterator<T>
-	{
-		return new Iterator(this["ptr_"], prev, next, val);
-	}
-
 	/* =========================================================
 		ELEMENTS I/O
 			- INSERT & ERASE
@@ -136,7 +128,8 @@ export class List<T>
 	 */
 	public dispatchEvent(event: List.Event<T>): void
 	{
-		this.dispatcher_.dispatchEvent(event);
+		if (this.dispatcher_)
+			this.dispatcher_.dispatchEvent(event);
 	}
 
 	/**
@@ -194,19 +187,30 @@ export namespace List
 	export import ReverseIterator = std.List.ReverseIterator;
 }
 
-/**
- * @hidden
- */
-class Iterator<T> extends std.List.Iterator<T>
+Object.defineProperty(std.List.Iterator.prototype, "value",
 {
-	public get value(): T
+	get: function () 
 	{
-		return this["value_"];
-	}
+		return this.value_;
+	},
+	set: function (val) 
+	{
+		this.value_ = val;
 
-	public set value(val: T)
-	{
-		this["value_"] = val;
-		(this.source() as List<T>).refresh(this);
-	}
-}
+		if (this.source() instanceof List)
+			this.source().refresh(this);
+	},
+	enumerable: true,
+	configurable: true
+});
+
+const old_swap = std.List.prototype.swap;
+std.List.prototype.swap = function <T>(obj: std.List<T>): void
+{
+	old_swap.call(this, obj);
+
+	if (this instanceof List)
+		this.refresh();
+	if (obj instanceof List)
+		obj.refresh();
+};

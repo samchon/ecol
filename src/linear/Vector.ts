@@ -147,7 +147,8 @@ export class Vector<T>
 	 */
 	public dispatchEvent(event: Vector.Event<T>): void
 	{
-		this.dispatcher_.dispatchEvent(event);
+		if (this.dispatcher_)
+			this.dispatcher_.dispatchEvent(event);
 	}
 
 	/**
@@ -204,3 +205,13 @@ export namespace Vector
 	export import ReverseIterator = std.Vector.ReverseIterator;
 }
 
+const old_swap = std.Vector.prototype.swap;
+std.Vector.prototype.swap = function <T>(obj: std.Vector<T>): void
+{
+	old_swap.call(this, obj);
+
+	if (this instanceof Vector)
+		this.refresh();
+	if (obj instanceof Vector)
+		obj.refresh();
+};
