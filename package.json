@@ -6,7 +6,7 @@
     "email": "samchon@samchon.org",
     "url": "http://samchon.org"
   },
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
@@ -16,13 +16,13 @@
   "dependencies": {
     "tstl": "x.x.x"
   },
-  "homepage": "https://github.com/samchon/ecol",
+  "homepage": "https://github.com/samchon/econ",
   "repository": {
     "type": "git",
-    "url": "https://github.com/samchon/ecol.git"
+    "url": "https://github.com/samchon/econ.git"
   },
   "bugs": {
-    "url": "https://github.com/samchon/ecol/issues"
+    "url": "https://github.com/samchon/econ/issues"
   },
   "licenses": [
     {
@@ -31,7 +31,35 @@
     }
   ],
   "keywords": [
-    "Event",
-    "Collections"
-  ]
+    "STL",
+    "TSTL",
+    "standard template library",
+    "event",
+    "container",
+    "iterator",
+    "vector",
+    "deque",
+    "list",
+    "vector_bool",
+    "set",
+    "multiset",
+    "unordered_set",
+    "unordered_multiset",
+    "map",
+    "multimap",
+    "unordered_map",
+    "unordered_multimap",
+    "VectorBoolean",
+    "TreeSet",
+    "TreeMultiSet",
+    "HashSet",
+    "HashMultiSet",
+    "TreeMap",
+    "TreeMultiMap",
+    "HashMap",
+    "HashMultiMap"
+  ],
+  "devDependencies": {
+    "@types/node": "^9.4.7"
+  }
 }

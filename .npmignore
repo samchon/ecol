@@ -1,6 +1,10 @@
-.vscode
-node_modules
-src
+.git/
+.github/
+.vscode/
+
+node_modules/
+src/
 
 *.*ignore
+*.js.map
 tsconfig.json

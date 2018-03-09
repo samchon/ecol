@@ -1,4 +1,4 @@
-# ECON
+# **E**vent **Con**tainers
 [![Build Status](https://travis-ci.org/samchon/econ.svg?branch=master)](https://travis-ci.org/samchon/econ)
 [![npm version](https://badge.fury.io/js/econ.svg)](https://www.npmjs.com/package/econ)
 [![Downloads](https://img.shields.io/npm/dm/econ.svg)](https://www.npmjs.com/package/econ)
@@ -6,6 +6,10 @@
 [![Chat on Gitter](https://badges.gitter.im/samchon/econ.svg)](https://gitter.im/samchon/econ?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Extension of [TypeScript-STL](https://github.com/samchon/tstl) **Con**tainers dispatching **E**vents.
+
+**TSTL** is an open-source project providing features of STL, migrated from *C++* to *TypeScript*. You can enjoy the STL's own specific *containers*, *algorithms* and *functors* in the JavaScript. If TypeScript, you also can take advantage of type restrictions and generic programming with the TypeScript. 
+
+**ECON** is an extension module of such **TSTL**, providing special containers dispatching events. The special containers are almost similar with the original STL Containers, but you also can observe elements' I/O events with the special containers. Types of the event dispatched by the special containers are `"insert"`, `"erase"` and `"refresh"`.
 
 
 
@@ -15,17 +19,24 @@ Extension of [TypeScript-STL](https://github.com/samchon/tstl) **Con**tainers di
   - Deque
   - List
   - VectorBoolean
-### Associative Containers
-  - Tree-structured Containers
+
+### Set Containers
+  - *Tree-based Containers*
     - TreeSet
     - TreeMultiSet
-    - TreeMap
-    - TreeMultiMap
-  - Hash-buckets based Containers
+  - *Hash-buckets based Containers*
     - HashSet
     - HashMultiSet
+
+### Map Containers
+  - *Tree-based Containers*
+    - TreeMap
+    - TreeMultiMap
+  - *Hash-buckets based Containers*
     - HashMap
     - HashMultiMap
+
+
 
 ## Installation
 ### NPM Module

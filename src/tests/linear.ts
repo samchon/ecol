@@ -77,7 +77,7 @@ function process_tasks(task_list: Task[], container: econ.List<number>): std.Vec
 	return ret;
 }
 
-function main(): void
+export function test_linear_containers(): void
 {
 	let tasks: Task[] = 
 	[
@@ -106,7 +106,4 @@ function main(): void
 	else if (std.equal(r1.begin(), r1.end(), r2.begin()) == false ||
 		std.equal(r1.begin(), r1.end(), r3.begin()) == false)
 		throw new std.DomainError("Error on ECON");
-
-	console.log("Linear Containers are OK.");
 }
-main();
