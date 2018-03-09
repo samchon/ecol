@@ -4,20 +4,41 @@ import {ICollection} from "../basic/ICollection";
 import {CollectionEvent} from "../basic/CollectionEvent";
 import {EventDispatcher} from "../basic/EventDispatcher";
 
-export class TreeMultiMap<Key, T> 
-	extends std.TreeMultiMap<Key, T>
+import * as internal from "./internal";
+
+export class Type<Key, T> 
+	extends std.Type<Key, T>
 	implements ICollection<std.Entry<Key, T>, 
-		std.TreeMultiMap<Key, T>, 
-		std.TreeMultiMap.Iterator<Key, T>, 
-		std.TreeMultiMap.ReverseIterator<Key, T>>
+		std.Type<Key, T>, 
+		std.Type.Iterator<Key, T>, 
+		std.Type.ReverseIterator<Key, T>>
 {
 	/**
 	 * @hidden
 	 */
 	private dispatcher_: EventDispatcher<std.Entry<Key, T>, 
-		std.TreeMultiMap<Key, T>, 
-		std.TreeMultiMap.Iterator<Key, T>, 
-		std.TreeMultiMap.ReverseIterator<Key, T>> = new EventDispatcher();
+		std.Type<Key, T>, 
+		std.Type.Iterator<Key, T>, 
+		std.Type.ReverseIterator<Key, T>> = new EventDispatcher();
+
+	/* ---------------------------------------------------------
+		CONSTRUCTORS
+	--------------------------------------------------------- */
+	// using super.constructor;
+
+	public clear(): void
+	{
+		let first = this.begin();
+		let last = this.end();
+
+		super.clear();
+		this.dispatchEvent(new CollectionEvent("erase", first, last));
+	}
+
+	protected _Create_element_list(): std.base._MapElementList<Key, T, std.Type<Key, T>>
+	{
+		return new internal._MapElementList(this as std.Type<Key, T>);
+	}
 
 	/* ---------------------------------------------------------
 		ELEMENTS I/O
@@ -25,7 +46,7 @@ export class TreeMultiMap<Key, T>
 	/**
 	 * @hidden
 	 */
-	protected _Handle_insert(first: std.TreeMultiMap.Iterator<Key, T>, last: std.TreeMultiMap.Iterator<Key, T>): void
+	protected _Handle_insert(first: std.Type.Iterator<Key, T>, last: std.Type.Iterator<Key, T>): void
 	{
 		super._Handle_insert(first, last);
 		
@@ -35,7 +56,7 @@ export class TreeMultiMap<Key, T>
 	/**
 	 * @hidden
 	 */
-	protected _Handle_erase(first: std.TreeMultiMap.Iterator<Key, T>, last: std.TreeMultiMap.Iterator<Key, T>): void
+	protected _Handle_erase(first: std.Type.Iterator<Key, T>, last: std.Type.Iterator<Key, T>): void
 	{
 		this._Handle_erase(first, last);
 		
@@ -52,7 +73,7 @@ export class TreeMultiMap<Key, T>
 	/**
 	 * @inheritDoc
 	 */
-	public dispatchEvent(event: TreeMultiMap.Event<Key, T>): void
+	public dispatchEvent(event: Type.Event<Key, T>): void
 	{
 		this.dispatcher_.dispatchEvent(event);
 	}
@@ -65,14 +86,14 @@ export class TreeMultiMap<Key, T>
 	/**
 	 * @inheritDoc
 	 */
-	public refresh(it: std.TreeMultiMap.Iterator<Key, T>): void;
+	public refresh(it: std.Type.Iterator<Key, T>): void;
 
 	/**
 	 * @inheritDoc
 	 */
-	public refresh(first: std.TreeMultiMap.Iterator<Key, T>, last: std.TreeMultiMap.Iterator<Key, T>): void;
+	public refresh(first: std.Type.Iterator<Key, T>, last: std.Type.Iterator<Key, T>): void;
 
-	public refresh(first: std.TreeMultiMap.Iterator<Key, T> = null, last: std.TreeMultiMap.Iterator<Key, T> = null): void
+	public refresh(first: std.Type.Iterator<Key, T> = null, last: std.Type.Iterator<Key, T> = null): void
 	{
 		if (first == null)
 		{
@@ -99,7 +120,7 @@ export class TreeMultiMap<Key, T>
 	/**
 	 * @inheritDoc
 	 */
-	public addEventListener(type: CollectionEvent.Type, listener: TreeMultiMap.Listener<Key, T>): void
+	public addEventListener(type: CollectionEvent.Type, listener: Type.Listener<Key, T>): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
@@ -107,25 +128,25 @@ export class TreeMultiMap<Key, T>
 	/**
 	 * @inheritDoc
 	 */
-	public removeEventListener(type: CollectionEvent.Type, listener: TreeMultiMap.Listener<Key, T>): void
+	public removeEventListener(type: CollectionEvent.Type, listener: Type.Listener<Key, T>): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
 	}
 }
 
-export namespace TreeMultiMap
+export namespace Type
 {
 	export type Event<Key, T> = CollectionEvent<std.Entry<Key, T>, 
-		std.TreeMultiMap<Key, T>, 
-		std.TreeMultiMap.Iterator<Key, T>, 
-		std.TreeMultiMap.ReverseIterator<Key, T>>;
+		std.Type<Key, T>, 
+		std.Type.Iterator<Key, T>, 
+		std.Type.ReverseIterator<Key, T>>;
 
 	export type Listener<Key, T> = CollectionEvent.Listener<std.Entry<Key, T>, 
-		std.TreeMultiMap<Key, T>, 
-		std.TreeMultiMap.Iterator<Key, T>, 
-		std.TreeMultiMap.ReverseIterator<Key, T>>;
+		std.Type<Key, T>, 
+		std.Type.Iterator<Key, T>, 
+		std.Type.ReverseIterator<Key, T>>;
 
 	export const Event = CollectionEvent;
-	export import Iterator = std.TreeMultiMap.Iterator;
-	export import ReverseIterator = std.TreeMultiMap.ReverseIterator;
+	export import Iterator = std.Type.Iterator;
+	export import ReverseIterator = std.Type.ReverseIterator;
 }

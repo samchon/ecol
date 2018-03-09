@@ -4,31 +4,22 @@ export class CollectionEvent<T,
 		SourceT extends std.base.Container<T, SourceT, IteratorT, ReverseT>,
 		IteratorT extends std.base.Iterator<T, SourceT, IteratorT, ReverseT>,
 		ReverseT extends std.base.ReverseIterator<T, SourceT, IteratorT, ReverseT>>
+	implements Iterable<T>
 {
-	private type_: string;
-	private first_: IteratorT;
-	private last_: IteratorT;
+	public readonly type: string;
+	public readonly first: IteratorT;
+	public readonly last: IteratorT;
 
 	public constructor(type: string, first: IteratorT, last: IteratorT)
 	{
-		this.type_ = type;
-		this.first_ = first;
-		this.last_ = last;
+		this.type = type;
+		this.first = first;
+		this.last = last;
 	}
 
-	public get type(): string
+	public [Symbol.iterator](): IterableIterator<T>
 	{
-		return this.type_;
-	}
-
-	public get first(): IteratorT
-	{
-		return this.first_;
-	}
-
-	public get last(): IteratorT
-	{
-		return this.last_;
+		return new std.base.ForOfAdaptor(this.first, this.last);
 	}
 }
 

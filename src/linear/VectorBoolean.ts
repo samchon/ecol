@@ -16,6 +16,20 @@ export class VectorBoolean
 	 */
 	private dispatcher_: EventDispatcher<boolean, std.VectorBoolean, std.VectorBoolean.Iterator, std.VectorBoolean.ReverseIterator> = new EventDispatcher();
 
+	/* ---------------------------------------------------------
+		CONSTRUCTORS
+	--------------------------------------------------------- */
+	// using super.constructor;
+
+	public clear(): void
+	{
+		let first = this.begin();
+		let last = this.end();
+
+		this._Notify_erase(first, last);
+		super.clear();
+	}
+
 	/* =========================================================
 		ELEMENTS I/O
 			- INSERT

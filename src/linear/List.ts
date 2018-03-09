@@ -18,6 +18,15 @@ export class List<T>
 	--------------------------------------------------------- */
 	// using super.constructor;
 
+	public clear(): void
+	{
+		let first = this.begin();
+		let last = this.end();
+
+		super.clear();
+		this._Notify_erase(first, last);
+	}
+
 	/**
 	 * @hidden
 	 */
@@ -26,8 +35,12 @@ export class List<T>
 		return new Iterator(this["ptr_"], prev, next, val);
 	}
 
-	/* ---------------------------------------------------------
+	/* =========================================================
 		ELEMENTS I/O
+			- INSERT & ERASE
+			- ALGORITHMS
+	============================================================
+		INSERT & ERASE
 	--------------------------------------------------------- */
 	/**
 	 * @hidden
@@ -53,6 +66,34 @@ export class List<T>
 		this._Notify_erase(first, last);
 
 		return ret;
+	}
+
+	/* ---------------------------------------------------------
+		ALGORITHMS
+	--------------------------------------------------------- */
+	/** 
+	 * @inheritDoc
+	 */
+	public sort(): void;
+
+	/** 
+	 * @inheritDoc
+	 */
+	public sort(comp: (x: T, y: T) => boolean): void;
+
+	public sort(comp: (x: T, y: T) => boolean = std.less): void
+	{
+		super.sort(comp);
+		this.refresh();
+	}
+
+	/** 
+	 * @inheritDoc
+	 */
+	public reverse(): void
+	{
+		super.reverse();
+		this.refresh();
 	}
 
 	/* =========================================================

@@ -1,2 +1,5 @@
 node_modules/
 lib/
+
+src/sets/*Set.ts
+src/maps/*Map.ts

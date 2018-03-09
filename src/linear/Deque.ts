@@ -13,6 +13,20 @@ export class Deque<T>
 	 */
 	private dispatcher_: EventDispatcher<T, std.Deque<T>, std.Deque.Iterator<T>, std.Deque.ReverseIterator<T>> = new EventDispatcher();
 
+	/* ---------------------------------------------------------
+		CONSTRUCTORS
+	--------------------------------------------------------- */
+	// using super.constructor;
+
+	public clear(): void
+	{
+		let first = this.begin();
+		let last = this.end();
+
+		this._Notify_erase(first, last);
+		super.clear();
+	}
+
 	/* =========================================================
 		ELEMENTS I/O
 			- INSERT

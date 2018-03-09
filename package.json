@@ -6,15 +6,15 @@
     "email": "samchon@samchon.org",
     "url": "http://samchon.org"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "build": "tsc && node lib/tests",
+    "build": "node build/template && tsc && node lib/tests",
     "test": "node lib/tests"
   },
   "dependencies": {
-    "tstl": "x.x.x"
+    "tstl": ">= 1.7.5"
   },
   "homepage": "https://github.com/samchon/econ",
   "repository": {
