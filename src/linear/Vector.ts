@@ -17,9 +17,13 @@ export class Vector<T>
 		ELEMENTS I/O
 			- INSERT
 			- ERASE
+			- REFRESH
 	============================================================
 		INSERT
 	--------------------------------------------------------- */
+	/**
+	 * @inheritdoc
+	 */
 	public push(...items: T[]): number
 	{
 		let n: number = this.size();
@@ -77,6 +81,46 @@ export class Vector<T>
 		return super._Erase_by_range(first, last);
 	}
 
+	/* ---------------------------------------------------------
+		REFRESH
+	--------------------------------------------------------- */
+	/**
+	 * @inheritDoc
+	 */
+	public set(index: number, val: T): void
+	{
+		super.set(index, val);
+		this.refresh(this.begin().advance(index));
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public refresh(): void;
+
+	/**
+	 * @inheritdoc
+	 */
+	public refresh(it: std.Vector.Iterator<T>): void;
+
+	/**
+	 * @inheritdoc
+	 */
+	public refresh(first: std.Vector.Iterator<T>, last: std.Vector.Iterator<T>): void;
+
+	public refresh(first: std.Vector.Iterator<T> = null, last: std.Vector.Iterator<T> = null): void
+	{
+		if (first == null)
+		{
+			first = this.begin();
+			last = this.end();
+		}
+		else if (last == null)
+			last = first.next();
+
+		this.dispatchEvent(new CollectionEvent("refresh", first, last));
+	}
+
 	/* =========================================================
 		EVENT DISPATCHER
 			- NOTIFIERS
@@ -84,12 +128,12 @@ export class Vector<T>
 	============================================================
 		NOTIFIERS
 	--------------------------------------------------------- */
-	public refresh(it: std.Vector.Iterator<T>): void;
-	public refresh(first: std.Vector.Iterator<T>, last: std.Vector.Iterator<T>): void;
-
-	public refresh(first: std.Vector.Iterator<T>, last: std.Vector.Iterator<T> = first.next()): void
+	/**
+	 * @inheritdoc
+	 */
+	public dispatchEvent(event: Vector.Event<T>): void
 	{
-		this.dispatchEvent(new CollectionEvent("refresh", first, last));
+		this.dispatcher_.dispatchEvent(event);
 	}
 
 	/**
@@ -108,24 +152,28 @@ export class Vector<T>
 		this.dispatchEvent(new CollectionEvent("erase", first, last));
 	}
 
-	public dispatchEvent(event: Vector.Event<T>): void
-	{
-		this.dispatcher_.dispatchEvent(event);
-	}
-
 	/* ---------------------------------------------------------
 		ACCESSORS
 	--------------------------------------------------------- */
+	/**
+	 * @inheritdoc
+	 */
 	public hasEventListener(type: CollectionEvent.Type): boolean
 	{
 		return this.dispatcher_.hasEventListener(type);
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public addEventListener(type: CollectionEvent.Type, listener: Vector.Listener<T>): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public removeEventListener(type: CollectionEvent.Type, listener: Vector.Listener<T>): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
@@ -136,4 +184,9 @@ export namespace Vector
 {
 	export type Event<T> = CollectionEvent<T, std.Vector<T>, std.Vector.Iterator<T>, std.Vector.ReverseIterator<T>>;
 	export type Listener<T> = CollectionEvent.Listener<T, std.Vector<T>, std.Vector.Iterator<T>, std.Vector.ReverseIterator<T>>;
+
+	export const Event = CollectionEvent;
+	export import Iterator = std.Vector.Iterator;
+	export import ReverseIterator = std.Vector.ReverseIterator;
 }
+

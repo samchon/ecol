@@ -49,32 +49,64 @@ export class HashMap<Key, T>
 	============================================================
 		NOTIFIERS
 	--------------------------------------------------------- */
-	public refresh(it: std.HashMap.Iterator<Key, T>): void;
-	public refresh(first: std.HashMap.Iterator<Key, T>, last: std.HashMap.Iterator<Key, T>): void;
-
-	public refresh(first: std.HashMap.Iterator<Key, T>, last: std.HashMap.Iterator<Key, T> = first.next()): void
-	{
-		this.dispatchEvent(new CollectionEvent("refresh", first, last));
-	}
-
+	/**
+	 * @inheritDoc
+	 */
 	public dispatchEvent(event: HashMap.Event<Key, T>): void
 	{
 		this.dispatcher_.dispatchEvent(event);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public refresh(): void;
+
+	/**
+	 * @inheritDoc
+	 */
+	public refresh(it: std.HashMap.Iterator<Key, T>): void;
+
+	/**
+	 * @inheritDoc
+	 */
+	public refresh(first: std.HashMap.Iterator<Key, T>, last: std.HashMap.Iterator<Key, T>): void;
+
+	public refresh(first: std.HashMap.Iterator<Key, T> = null, last: std.HashMap.Iterator<Key, T> = null): void
+	{
+		if (first == null)
+		{
+			first = this.begin();
+			last = this.end();
+		}
+		else if (last == null)
+			last = first.next();
+
+		this.dispatchEvent(new CollectionEvent("refresh", first, last));
+	}
+
 	/* ---------------------------------------------------------
 		ACCESSORS
-	--------------------------------------------------------- */
+	-------------------------------------------------------- */
+	/**
+	 * @inheritDoc
+	 */
 	public hasEventListener(type: CollectionEvent.Type): boolean
 	{
 		return this.dispatcher_.hasEventListener(type);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public addEventListener(type: CollectionEvent.Type, listener: HashMap.Listener<Key, T>): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public removeEventListener(type: CollectionEvent.Type, listener: HashMap.Listener<Key, T>): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
@@ -92,4 +124,8 @@ export namespace HashMap
 		std.HashMap<Key, T>, 
 		std.HashMap.Iterator<Key, T>, 
 		std.HashMap.ReverseIterator<Key, T>>;
+
+	export const Event = CollectionEvent;
+	export import Iterator = std.HashMap.Iterator;
+	export import ReverseIterator = std.HashMap.ReverseIterator;
 }

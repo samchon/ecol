@@ -4,14 +4,17 @@ import {ICollection} from "../basic/ICollection";
 import {CollectionEvent} from "../basic/CollectionEvent";
 import {EventDispatcher} from "../basic/EventDispatcher";
 
-export class Deque<T> 
-	extends std.Deque<T>
-	implements ICollection<T, std.Deque<T>, std.Deque.Iterator<T>, std.Deque.ReverseIterator<T>>
+export class VectorBoolean
+	extends std.VectorBoolean
+	implements ICollection<boolean, 
+		std.VectorBoolean, 
+		std.VectorBoolean.Iterator, 
+		std.VectorBoolean.ReverseIterator>
 {
 	/**
 	 * @hidden
 	 */
-	private dispatcher_: EventDispatcher<T, std.Deque<T>, std.Deque.Iterator<T>, std.Deque.ReverseIterator<T>> = new EventDispatcher();
+	private dispatcher_: EventDispatcher<boolean, std.VectorBoolean, std.VectorBoolean.Iterator, std.VectorBoolean.ReverseIterator> = new EventDispatcher();
 
 	/* =========================================================
 		ELEMENTS I/O
@@ -24,17 +27,7 @@ export class Deque<T>
 	/**
 	 * @inheritdoc
 	 */
-	public push_front(val: T): void
-	{
-		super.push_front(val);
-
-		this._Notify_insert(this.begin(), this.begin().next());
-	}
-
-	/**
-	 * @inheritdoc
-	 */
-	public push_back(val: T): void
+	public push_back(val: boolean): void
 	{
 		super.push(val);
 
@@ -44,8 +37,19 @@ export class Deque<T>
 	/**
 	 * @hidden
 	 */
-	protected _Insert_by_range<U extends T, InputIterator extends std.IForwardIterator<U, InputIterator>>
-		(pos: std.Deque.Iterator<T>, first: InputIterator, last: InputIterator): std.Deque.Iterator<T>
+	protected _Insert_by_repeating_val(pos: std.VectorBoolean.Iterator, n: number, val: boolean): std.VectorBoolean.Iterator
+	{
+		let ret = super._Insert_by_repeating_val(pos, n, val);
+		this._Notify_insert(pos, pos.advance(n));
+
+		return ret;
+	}
+
+	/**
+	 * @hidden
+	 */
+	protected _Insert_by_range<InputIterator extends Readonly<std.IForwardIterator<boolean, InputIterator>>>
+		(pos: std.VectorBoolean.Iterator, first: InputIterator, last: InputIterator): std.VectorBoolean.Iterator
 	{
 		let n: number = this.size();
 		let ret = super._Insert_by_range(pos, first, last);
@@ -62,16 +66,6 @@ export class Deque<T>
 	/**
 	 * @inheritdoc
 	 */
-	public pop_front(): void
-	{
-		this._Notify_erase(this.begin(), this.begin().next());
-
-		super.pop_front();
-	}
-
-	/**
-	 * @inheritdoc
-	 */
 	public pop_back(): void
 	{
 		this._Notify_erase(this.end().prev(), this.end());
@@ -82,7 +76,7 @@ export class Deque<T>
 	/**
 	 * @hidden
 	 */
-	protected _Erase_by_range(first: std.Deque.Iterator<T>, last: std.Deque.Iterator<T>): std.Deque.Iterator<T>
+	protected _Erase_by_range(first: std.VectorBoolean.Iterator, last: std.VectorBoolean.Iterator): std.VectorBoolean.Iterator
 	{
 		this._Notify_erase(first, last);
 
@@ -93,12 +87,21 @@ export class Deque<T>
 		REFRESH
 	--------------------------------------------------------- */
 	/**
-	 * @inheritdoc
+	 * @inheritDoc
 	 */
-	public set(index: number, val: T): void
+	public set(index: number, val: boolean): void
 	{
 		super.set(index, val);
 		this.refresh(this.begin().advance(index));
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public flip(): void
+	{
+		super.flip();
+		this.refresh();
 	}
 
 	/**
@@ -109,14 +112,14 @@ export class Deque<T>
 	/**
 	 * @inheritdoc
 	 */
-	public refresh(it: std.Deque.Iterator<T>): void;
+	public refresh(it: std.VectorBoolean.Iterator): void;
 
 	/**
 	 * @inheritdoc
 	 */
-	public refresh(first: std.Deque.Iterator<T>, last: std.Deque.Iterator<T>): void;
+	public refresh(first: std.VectorBoolean.Iterator, last: std.VectorBoolean.Iterator): void;
 
-	public refresh(first: std.Deque.Iterator<T> = null, last: std.Deque.Iterator<T> = null): void
+	public refresh(first: std.VectorBoolean.Iterator = null, last: std.VectorBoolean.Iterator = null): void
 	{
 		if (first == null)
 		{
@@ -139,7 +142,7 @@ export class Deque<T>
 	/**
 	 * @inheritdoc
 	 */
-	public dispatchEvent(event: Deque.Event<T>): void
+	public dispatchEvent(event: VectorBoolean.Event): void
 	{
 		this.dispatcher_.dispatchEvent(event);
 	}
@@ -147,7 +150,7 @@ export class Deque<T>
 	/**
 	 * @hidden
 	 */
-	private _Notify_insert(first: std.Deque.Iterator<T>, last: std.Deque.Iterator<T>): void
+	private _Notify_insert(first: std.VectorBoolean.Iterator, last: std.VectorBoolean.Iterator): void
 	{
 		this.dispatchEvent(new CollectionEvent("insert", first, last));
 	}
@@ -155,7 +158,7 @@ export class Deque<T>
 	/**
 	 * @hidden
 	 */
-	private _Notify_erase(first: std.Deque.Iterator<T>, last: std.Deque.Iterator<T>): void
+	private _Notify_erase(first: std.VectorBoolean.Iterator, last: std.VectorBoolean.Iterator): void
 	{
 		this.dispatchEvent(new CollectionEvent("erase", first, last));
 	}
@@ -174,7 +177,7 @@ export class Deque<T>
 	/**
 	 * @inheritdoc
 	 */
-	public addEventListener(type: CollectionEvent.Type, listener: Deque.Listener<T>): void
+	public addEventListener(type: CollectionEvent.Type, listener: VectorBoolean.Listener): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
@@ -182,18 +185,18 @@ export class Deque<T>
 	/**
 	 * @inheritdoc
 	 */
-	public removeEventListener(type: CollectionEvent.Type, listener: Deque.Listener<T>): void
+	public removeEventListener(type: CollectionEvent.Type, listener: VectorBoolean.Listener): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
 	}
 }
 
-export namespace Deque
+export namespace VectorBoolean
 {
-	export type Event<T> = CollectionEvent<T, std.Deque<T>, std.Deque.Iterator<T>, std.Deque.ReverseIterator<T>>;
-	export type Listener<T> = CollectionEvent.Listener<T, std.Deque<T>, std.Deque.Iterator<T>, std.Deque.ReverseIterator<T>>;
+	export type Event = CollectionEvent<boolean, std.VectorBoolean, std.VectorBoolean.Iterator, std.VectorBoolean.ReverseIterator>;
+	export type Listener = CollectionEvent.Listener<boolean, std.VectorBoolean, std.VectorBoolean.Iterator, std.VectorBoolean.ReverseIterator>;
 
 	export const Event = CollectionEvent;
-	export import Iterator = std.Deque.Iterator;
-	export import ReverseIterator = std.Deque.ReverseIterator;
+	export import Iterator = std.VectorBoolean.Iterator;
+	export import ReverseIterator = std.VectorBoolean.ReverseIterator;
 }

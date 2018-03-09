@@ -9,6 +9,7 @@ export interface ICollection<T,
 	extends std.base.Container<T, SourceT, IteratorT, ReverseT>,
 		IEventDispatcher<T, SourceT, IteratorT, ReverseT>
 {
+	refresh(): void;
 	refresh(it: IteratorT): void;
 	refresh(first: IteratorT, last: IteratorT): void;
 }

@@ -43,32 +43,64 @@ export class HashMultiSet<T>
 	============================================================
 		NOTIFIERS
 	--------------------------------------------------------- */
-	public refresh(it: std.HashMultiSet.Iterator<T>): void;
-	public refresh(first: std.HashMultiSet.Iterator<T>, last: std.HashMultiSet.Iterator<T>): void;
-
-	public refresh(first: std.HashMultiSet.Iterator<T>, last: std.HashMultiSet.Iterator<T> = first.next()): void
-	{
-		this.dispatchEvent(new CollectionEvent("refresh", first, last));
-	}
-
+	/**
+	 * @inheritDoc
+	 */
 	public dispatchEvent(event: HashMultiSet.Event<T>): void
 	{
 		this.dispatcher_.dispatchEvent(event);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public refresh(): void;
+
+	/**
+	 * @inheritDoc
+	 */
+	public refresh(it: std.HashMultiSet.Iterator<T>): void;
+
+	/**
+	 * @inheritDoc
+	 */
+	public refresh(first: std.HashMultiSet.Iterator<T>, last: std.HashMultiSet.Iterator<T>): void;
+
+	public refresh(first: std.HashMultiSet.Iterator<T> = null, last: std.HashMultiSet.Iterator<T> = null): void
+	{
+		if (first == null)
+		{
+			first = this.begin();
+			last = this.end();
+		}
+		else if (last == null)
+			last = first.next();
+
+		this.dispatchEvent(new CollectionEvent("refresh", first, last));
+	}
+
 	/* ---------------------------------------------------------
 		ACCESSORS
 	--------------------------------------------------------- */
+	/**
+	 * @inheritDoc
+	 */
 	public hasEventListener(type: CollectionEvent.Type): boolean
 	{
 		return this.dispatcher_.hasEventListener(type);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public addEventListener(type: CollectionEvent.Type, listener: HashMultiSet.Listener<T>): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public removeEventListener(type: CollectionEvent.Type, listener: HashMultiSet.Listener<T>): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
@@ -79,4 +111,8 @@ export namespace HashMultiSet
 {
 	export type Event<T> = CollectionEvent<T, std.HashMultiSet<T>, std.HashMultiSet.Iterator<T>, std.HashMultiSet.ReverseIterator<T>>;
 	export type Listener<T> = CollectionEvent.Listener<T, std.HashMultiSet<T>, std.HashMultiSet.Iterator<T>, std.HashMultiSet.ReverseIterator<T>>;
+
+	export const Event = CollectionEvent;
+	export import Iterator = std.HashMultiSet.Iterator;
+	export import ReverseIterator = std.HashMultiSet.ReverseIterator;
 }

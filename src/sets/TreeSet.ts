@@ -43,32 +43,64 @@ export class TreeSet<T>
 	============================================================
 		NOTIFIERS
 	--------------------------------------------------------- */
-	public refresh(it: std.TreeSet.Iterator<T>): void;
-	public refresh(first: std.TreeSet.Iterator<T>, last: std.TreeSet.Iterator<T>): void;
-
-	public refresh(first: std.TreeSet.Iterator<T>, last: std.TreeSet.Iterator<T> = first.next()): void
-	{
-		this.dispatchEvent(new CollectionEvent("refresh", first, last));
-	}
-
+	/**
+	 * @inheritDoc
+	 */
 	public dispatchEvent(event: TreeSet.Event<T>): void
 	{
 		this.dispatcher_.dispatchEvent(event);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public refresh(): void;
+
+	/**
+	 * @inheritDoc
+	 */
+	public refresh(it: std.TreeSet.Iterator<T>): void;
+
+	/**
+	 * @inheritDoc
+	 */
+	public refresh(first: std.TreeSet.Iterator<T>, last: std.TreeSet.Iterator<T>): void;
+
+	public refresh(first: std.TreeSet.Iterator<T> = null, last: std.TreeSet.Iterator<T> = null): void
+	{
+		if (first == null)
+		{
+			first = this.begin();
+			last = this.end();
+		}
+		else if (last == null)
+			last = first.next();
+
+		this.dispatchEvent(new CollectionEvent("refresh", first, last));
+	}
+
 	/* ---------------------------------------------------------
 		ACCESSORS
 	--------------------------------------------------------- */
+	/**
+	 * @inheritDoc
+	 */
 	public hasEventListener(type: CollectionEvent.Type): boolean
 	{
 		return this.dispatcher_.hasEventListener(type);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public addEventListener(type: CollectionEvent.Type, listener: TreeSet.Listener<T>): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public removeEventListener(type: CollectionEvent.Type, listener: TreeSet.Listener<T>): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
@@ -79,4 +111,8 @@ export namespace TreeSet
 {
 	export type Event<T> = CollectionEvent<T, std.TreeSet<T>, std.TreeSet.Iterator<T>, std.TreeSet.ReverseIterator<T>>;
 	export type Listener<T> = CollectionEvent.Listener<T, std.TreeSet<T>, std.TreeSet.Iterator<T>, std.TreeSet.ReverseIterator<T>>;
+
+	export const Event = CollectionEvent;
+	export import Iterator = std.TreeSet.Iterator;
+	export import ReverseIterator = std.TreeSet.ReverseIterator;
 }

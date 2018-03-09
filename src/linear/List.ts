@@ -14,6 +14,19 @@ export class List<T>
 	private dispatcher_: EventDispatcher<T, std.List<T>, std.List.Iterator<T>, std.List.ReverseIterator<T>> = new EventDispatcher();
 
 	/* ---------------------------------------------------------
+		CONSTRUCTORS
+	--------------------------------------------------------- */
+	// using super.constructor;
+
+	/**
+	 * @hidden
+	 */
+	protected _Create_iterator(prev: std.List.Iterator<T>, next: std.List.Iterator<T>, val: T): std.List.Iterator<T>
+	{
+		return new Iterator(this["ptr_"], prev, next, val);
+	}
+
+	/* ---------------------------------------------------------
 		ELEMENTS I/O
 	--------------------------------------------------------- */
 	/**
@@ -49,12 +62,40 @@ export class List<T>
 	============================================================
 		NOTIFIERS
 	--------------------------------------------------------- */
+	/**
+	 * @inheritdoc
+	 */
+	public refresh(): void;
+
+	/**
+	 * @inheritdoc
+	 */
 	public refresh(it: std.List.Iterator<T>): void;
+
+	/**
+	 * @inheritdoc
+	 */
 	public refresh(first: std.List.Iterator<T>, last: std.List.Iterator<T>): void;
 
-	public refresh(first: std.List.Iterator<T>, last: std.List.Iterator<T> = first.next()): void
+	public refresh(first: std.List.Iterator<T> = null, last: std.List.Iterator<T> = null): void
 	{
+		if (first == null)
+		{
+			first = this.begin();
+			last = this.end();
+		}
+		else if (last == null)
+			last = first.next();
+
 		this.dispatchEvent(new CollectionEvent("refresh", first, last));
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public dispatchEvent(event: List.Event<T>): void
+	{
+		this.dispatcher_.dispatchEvent(event);
 	}
 
 	/**
@@ -73,24 +114,28 @@ export class List<T>
 		this.dispatchEvent(new CollectionEvent("erase", first, last));
 	}
 
-	public dispatchEvent(event: List.Event<T>): void
-	{
-		this.dispatcher_.dispatchEvent(event);
-	}
-
 	/* ---------------------------------------------------------
 		ACCESSORS
 	--------------------------------------------------------- */
+	/**
+	 * @inheritdoc
+	 */
 	public hasEventListener(type: CollectionEvent.Type): boolean
 	{
 		return this.dispatcher_.hasEventListener(type);
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public addEventListener(type: CollectionEvent.Type, listener: List.Listener<T>): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
 
+	/**
+	 * @inheritdoc
+	 */
 	public removeEventListener(type: CollectionEvent.Type, listener: List.Listener<T>): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
@@ -101,4 +146,26 @@ export namespace List
 {
 	export type Event<T> = CollectionEvent<T, std.List<T>, std.List.Iterator<T>, std.List.ReverseIterator<T>>;
 	export type Listener<T> = CollectionEvent.Listener<T, std.List<T>, std.List.Iterator<T>, std.List.ReverseIterator<T>>;
+
+	export const Event = CollectionEvent;
+
+	export import Iterator = std.List.Iterator;
+	export import ReverseIterator = std.List.ReverseIterator;
+}
+
+/**
+ * @hidden
+ */
+class Iterator<T> extends std.List.Iterator<T>
+{
+	public get value(): T
+	{
+		return this["value_"];
+	}
+
+	public set value(val: T)
+	{
+		this["value_"] = val;
+		(this.source() as List<T>).refresh(this);
+	}
 }

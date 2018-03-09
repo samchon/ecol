@@ -21,12 +21,12 @@ export class CollectionEvent<T,
 		return this.type_;
 	}
 
-	public first(): IteratorT
+	public get first(): IteratorT
 	{
 		return this.first_;
 	}
 
-	public last(): IteratorT
+	public get last(): IteratorT
 	{
 		return this.last_;
 	}
@@ -34,7 +34,7 @@ export class CollectionEvent<T,
 
 export namespace CollectionEvent
 {
-	export type Type = string | "insert" | "erase" | "refresh";
+	export type Type = "insert" | "erase" | "refresh";
 
 	export type Listener<T, 
 			SourceT extends std.base.Container<T, SourceT, IteratorT, ReverseT>,

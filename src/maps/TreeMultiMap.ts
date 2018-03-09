@@ -49,32 +49,64 @@ export class TreeMultiMap<Key, T>
 	============================================================
 		NOTIFIERS
 	--------------------------------------------------------- */
-	public refresh(it: std.TreeMultiMap.Iterator<Key, T>): void;
-	public refresh(first: std.TreeMultiMap.Iterator<Key, T>, last: std.TreeMultiMap.Iterator<Key, T>): void;
-
-	public refresh(first: std.TreeMultiMap.Iterator<Key, T>, last: std.TreeMultiMap.Iterator<Key, T> = first.next()): void
-	{
-		this.dispatchEvent(new CollectionEvent("refresh", first, last));
-	}
-
+	/**
+	 * @inheritDoc
+	 */
 	public dispatchEvent(event: TreeMultiMap.Event<Key, T>): void
 	{
 		this.dispatcher_.dispatchEvent(event);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public refresh(): void;
+
+	/**
+	 * @inheritDoc
+	 */
+	public refresh(it: std.TreeMultiMap.Iterator<Key, T>): void;
+
+	/**
+	 * @inheritDoc
+	 */
+	public refresh(first: std.TreeMultiMap.Iterator<Key, T>, last: std.TreeMultiMap.Iterator<Key, T>): void;
+
+	public refresh(first: std.TreeMultiMap.Iterator<Key, T> = null, last: std.TreeMultiMap.Iterator<Key, T> = null): void
+	{
+		if (first == null)
+		{
+			first = this.begin();
+			last = this.end();
+		}
+		else if (last == null)
+			last = first.next();
+
+		this.dispatchEvent(new CollectionEvent("refresh", first, last));
+	}
+
 	/* ---------------------------------------------------------
 		ACCESSORS
-	--------------------------------------------------------- */
+	-------------------------------------------------------- */
+	/**
+	 * @inheritDoc
+	 */
 	public hasEventListener(type: CollectionEvent.Type): boolean
 	{
 		return this.dispatcher_.hasEventListener(type);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public addEventListener(type: CollectionEvent.Type, listener: TreeMultiMap.Listener<Key, T>): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public removeEventListener(type: CollectionEvent.Type, listener: TreeMultiMap.Listener<Key, T>): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
@@ -92,4 +124,8 @@ export namespace TreeMultiMap
 		std.TreeMultiMap<Key, T>, 
 		std.TreeMultiMap.Iterator<Key, T>, 
 		std.TreeMultiMap.ReverseIterator<Key, T>>;
+
+	export const Event = CollectionEvent;
+	export import Iterator = std.TreeMultiMap.Iterator;
+	export import ReverseIterator = std.TreeMultiMap.ReverseIterator;
 }
