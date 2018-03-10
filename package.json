@@ -6,15 +6,12 @@
     "email": "samchon@samchon.org",
     "url": "http://samchon.org"
   },
-  "version": "0.0.3",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
     "build": "node build/template && tsc && node lib/tests",
     "test": "node lib/tests"
-  },
-  "dependencies": {
-    "tstl": ">= 1.7.6"
   },
   "homepage": "https://github.com/samchon/econ",
   "repository": {
@@ -59,7 +56,10 @@
     "HashMap",
     "HashMultiMap"
   ],
+  "dependencies": {
+    "tstl": ">= 1.7.7"
+  },
   "devDependencies": {
-    "@types/node": "^9.4.7"
+    "@types/node": "~x.x.x"
   }
 }

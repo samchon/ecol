@@ -3,3 +3,4 @@ lib/
 
 src/sets/*Set.ts
 src/maps/*Map.ts
+package-lock.json
