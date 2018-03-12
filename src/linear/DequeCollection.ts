@@ -4,7 +4,7 @@ import {ICollection} from "../basic/ICollection";
 import {CollectionEvent} from "../basic/CollectionEvent";
 import {EventDispatcher} from "../basic/EventDispatcher";
 
-export class Deque<T> 
+export class DequeCollection<T> 
 	extends std.Deque<T>
 	implements ICollection<T, std.Deque<T>, std.Deque.Iterator<T>, std.Deque.ReverseIterator<T>>
 {
@@ -153,7 +153,7 @@ export class Deque<T>
 	/**
 	 * @inheritdoc
 	 */
-	public dispatchEvent(event: Deque.Event<T>): void
+	public dispatchEvent(event: DequeCollection.Event<T>): void
 	{
 		if (this.dispatcher_)
 			this.dispatcher_.dispatchEvent(event);
@@ -189,7 +189,7 @@ export class Deque<T>
 	/**
 	 * @inheritdoc
 	 */
-	public addEventListener(type: CollectionEvent.Type, listener: Deque.Listener<T>): void
+	public addEventListener(type: CollectionEvent.Type, listener: DequeCollection.Listener<T>): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
@@ -197,13 +197,13 @@ export class Deque<T>
 	/**
 	 * @inheritdoc
 	 */
-	public removeEventListener(type: CollectionEvent.Type, listener: Deque.Listener<T>): void
+	public removeEventListener(type: CollectionEvent.Type, listener: DequeCollection.Listener<T>): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
 	}
 }
 
-export namespace Deque
+export namespace DequeCollection
 {
 	export type Event<T> = CollectionEvent<T, std.Deque<T>, std.Deque.Iterator<T>, std.Deque.ReverseIterator<T>>;
 	export type Listener<T> = CollectionEvent.Listener<T, std.Deque<T>, std.Deque.Iterator<T>, std.Deque.ReverseIterator<T>>;
@@ -218,8 +218,8 @@ std.Deque.prototype.swap = function <T>(obj: std.Deque<T>): void
 {
 	old_swap.call(this, obj);
 
-	if (this instanceof Deque)
+	if (this instanceof DequeCollection)
 		this.refresh();
-	if (obj instanceof Deque)
+	if (obj instanceof DequeCollection)
 		obj.refresh();
 };

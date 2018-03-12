@@ -1,10 +1,10 @@
 import std = require("tstl");
-import econ = require("../index");
+import ecol = require("../index");
 
 export function test_swaps()
 {
 	let x: std.List<number> = new std.List();
-	let y: econ.List<number> = new econ.List();
+	let y: ecol.ListCollection<number> = new ecol.ListCollection();
 	let sum: number = 0;
 
 	y.addEventListener("refresh", event =>

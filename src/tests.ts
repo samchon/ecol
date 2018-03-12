@@ -12,7 +12,7 @@ async function main(): Promise<void>
 		
 		let external = await import(PATH + "/" + file.substr(0, file.length - 3));
 		for (let key in external)
-			if (typeof key == "string" && key.substr(0, 5) == "test_")
+			if (key.substr(0, 5) == "test_")
 			{
 				console.log(key);
 				await external[key]();

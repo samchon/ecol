@@ -8,18 +8,18 @@ export * from "./basic/EventDispatcher";
 // CONTAINERS
 //----
 // LINEAR
-export * from "./linear/Vector";
-export * from "./linear/Deque";
-export * from "./linear/List";
+export * from "./linear/VectorCollection";
+export * from "./linear/DequeCollection";
+export * from "./linear/ListCollection";
 
 // SETS
-export * from "./sets/TreeSet";
-export * from "./sets/TreeMultiSet";
-export * from "./sets/HashSet";
-export * from "./sets/HashMultiSet";
+export * from "./sets/TreeSetCollection";
+export * from "./sets/TreeMultiSetCollection";
+export * from "./sets/HashSetCollection";
+export * from "./sets/HashMultiSetCollection";
 
 // MAPS
-export * from "./maps/TreeMap";
-export * from "./maps/TreeMultiMap";
-export * from "./maps/HashMap";
-export * from "./maps/HashMultiMap";
+export * from "./maps/TreeMapCollection";
+export * from "./maps/TreeMultiMapCollection";
+export * from "./maps/HashMapCollection";
+export * from "./maps/HashMultiMapCollection";

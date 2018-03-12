@@ -4,17 +4,14 @@ import {ICollection} from "../basic/ICollection";
 import {CollectionEvent} from "../basic/CollectionEvent";
 import {EventDispatcher} from "../basic/EventDispatcher";
 
-export class VectorBoolean
-	extends std.VectorBoolean
-	implements ICollection<boolean, 
-		std.VectorBoolean, 
-		std.VectorBoolean.Iterator, 
-		std.VectorBoolean.ReverseIterator>
+export class ArrayCollection<T> 
+	extends std.Vector<T>
+	implements ICollection<T, std.Vector<T>, std.Vector.Iterator<T>, std.Vector.ReverseIterator<T>>
 {
 	/**
 	 * @hidden
 	 */
-	private dispatcher_: EventDispatcher<boolean, std.VectorBoolean, std.VectorBoolean.Iterator, std.VectorBoolean.ReverseIterator> = new EventDispatcher();
+	private dispatcher_: EventDispatcher<T, std.Vector<T>, std.Vector.Iterator<T>, std.Vector.ReverseIterator<T>> = new EventDispatcher();
 
 	/* ---------------------------------------------------------
 		CONSTRUCTORS
@@ -41,7 +38,19 @@ export class VectorBoolean
 	/**
 	 * @inheritdoc
 	 */
-	public push_back(val: boolean): void
+	public push(...items: T[]): number
+	{
+		let n: number = this.size();
+		let ret: number = super.push(...items);
+
+		this._Notify_insert(this.begin().advance(n), this.end());
+		return ret;
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public push_back(val: T): void
 	{
 		super.push(val);
 
@@ -51,19 +60,8 @@ export class VectorBoolean
 	/**
 	 * @hidden
 	 */
-	protected _Insert_by_repeating_val(pos: std.VectorBoolean.Iterator, n: number, val: boolean): std.VectorBoolean.Iterator
-	{
-		let ret = super._Insert_by_repeating_val(pos, n, val);
-		this._Notify_insert(pos, pos.advance(n));
-
-		return ret;
-	}
-
-	/**
-	 * @hidden
-	 */
-	protected _Insert_by_range<InputIterator extends Readonly<std.IForwardIterator<boolean, InputIterator>>>
-		(pos: std.VectorBoolean.Iterator, first: InputIterator, last: InputIterator): std.VectorBoolean.Iterator
+	protected _Insert_by_range<U extends T, InputIterator extends std.IForwardIterator<U, InputIterator>>
+		(pos: std.Vector.Iterator<T>, first: InputIterator, last: InputIterator): std.Vector.Iterator<T>
 	{
 		let n: number = this.size();
 		let ret = super._Insert_by_range(pos, first, last);
@@ -90,7 +88,7 @@ export class VectorBoolean
 	/**
 	 * @hidden
 	 */
-	protected _Erase_by_range(first: std.VectorBoolean.Iterator, last: std.VectorBoolean.Iterator): std.VectorBoolean.Iterator
+	protected _Erase_by_range(first: std.Vector.Iterator<T>, last: std.Vector.Iterator<T>): std.Vector.Iterator<T>
 	{
 		this._Notify_erase(first, last);
 
@@ -103,19 +101,10 @@ export class VectorBoolean
 	/**
 	 * @inheritDoc
 	 */
-	public set(index: number, val: boolean): void
+	public set(index: number, val: T): void
 	{
 		super.set(index, val);
 		this.refresh(this.begin().advance(index));
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public flip(): void
-	{
-		super.flip();
-		this.refresh();
 	}
 
 	/**
@@ -126,14 +115,14 @@ export class VectorBoolean
 	/**
 	 * @inheritdoc
 	 */
-	public refresh(it: std.VectorBoolean.Iterator): void;
+	public refresh(it: std.Vector.Iterator<T>): void;
 
 	/**
 	 * @inheritdoc
 	 */
-	public refresh(first: std.VectorBoolean.Iterator, last: std.VectorBoolean.Iterator): void;
+	public refresh(first: std.Vector.Iterator<T>, last: std.Vector.Iterator<T>): void;
 
-	public refresh(first: std.VectorBoolean.Iterator = null, last: std.VectorBoolean.Iterator = null): void
+	public refresh(first: std.Vector.Iterator<T> = null, last: std.Vector.Iterator<T> = null): void
 	{
 		if (first == null)
 		{
@@ -156,7 +145,7 @@ export class VectorBoolean
 	/**
 	 * @inheritdoc
 	 */
-	public dispatchEvent(event: VectorBoolean.Event): void
+	public dispatchEvent(event: ArrayCollection.Event<T>): void
 	{
 		if (this.dispatcher_)
 			this.dispatcher_.dispatchEvent(event);
@@ -165,7 +154,7 @@ export class VectorBoolean
 	/**
 	 * @hidden
 	 */
-	private _Notify_insert(first: std.VectorBoolean.Iterator, last: std.VectorBoolean.Iterator): void
+	private _Notify_insert(first: std.Vector.Iterator<T>, last: std.Vector.Iterator<T>): void
 	{
 		this.dispatchEvent(new CollectionEvent("insert", first, last));
 	}
@@ -173,7 +162,7 @@ export class VectorBoolean
 	/**
 	 * @hidden
 	 */
-	private _Notify_erase(first: std.VectorBoolean.Iterator, last: std.VectorBoolean.Iterator): void
+	private _Notify_erase(first: std.Vector.Iterator<T>, last: std.Vector.Iterator<T>): void
 	{
 		this.dispatchEvent(new CollectionEvent("erase", first, last));
 	}
@@ -192,7 +181,7 @@ export class VectorBoolean
 	/**
 	 * @inheritdoc
 	 */
-	public addEventListener(type: CollectionEvent.Type, listener: VectorBoolean.Listener): void
+	public addEventListener(type: CollectionEvent.Type, listener: ArrayCollection.Listener<T>): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
@@ -200,29 +189,29 @@ export class VectorBoolean
 	/**
 	 * @inheritdoc
 	 */
-	public removeEventListener(type: CollectionEvent.Type, listener: VectorBoolean.Listener): void
+	public removeEventListener(type: CollectionEvent.Type, listener: ArrayCollection.Listener<T>): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
 	}
 }
 
-export namespace VectorBoolean
+export namespace ArrayCollection
 {
-	export type Event = CollectionEvent<boolean, std.VectorBoolean, std.VectorBoolean.Iterator, std.VectorBoolean.ReverseIterator>;
-	export type Listener = CollectionEvent.Listener<boolean, std.VectorBoolean, std.VectorBoolean.Iterator, std.VectorBoolean.ReverseIterator>;
+	export type Event<T> = CollectionEvent<T, std.Vector<T>, std.Vector.Iterator<T>, std.Vector.ReverseIterator<T>>;
+	export type Listener<T> = CollectionEvent.Listener<T, std.Vector<T>, std.Vector.Iterator<T>, std.Vector.ReverseIterator<T>>;
 
 	export const Event = CollectionEvent;
-	export import Iterator = std.VectorBoolean.Iterator;
-	export import ReverseIterator = std.VectorBoolean.ReverseIterator;
+	export import Iterator = std.Vector.Iterator;
+	export import ReverseIterator = std.Vector.ReverseIterator;
 }
 
-const old_swap = std.VectorBoolean.prototype.swap;
-std.VectorBoolean.prototype.swap = function (obj: std.VectorBoolean): void
+const old_swap = std.Vector.prototype.swap;
+std.Vector.prototype.swap = function <T>(obj: std.Vector<T>): void
 {
 	old_swap.call(this, obj);
 
-	if (this instanceof VectorBoolean)
+	if (this instanceof ArrayCollection)
 		this.refresh();
-	if (obj instanceof VectorBoolean)
+	if (obj instanceof ArrayCollection)
 		obj.refresh();
 };

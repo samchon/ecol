@@ -1,5 +1,5 @@
 import * as std from "tstl";
-import * as econ from "../index";
+import * as ecol from "../index";
 
 interface Task
 {
@@ -9,7 +9,7 @@ interface Task
 	3?: number;
 }
 
-function process_tasks(task_list: Task[], container: econ.List<number>): std.Vector<number>
+function process_tasks(task_list: Task[], container: ecol.ListCollection<number>): std.Vector<number>
 {
 	//----
 	// PRELIMINARIES
@@ -18,8 +18,8 @@ function process_tasks(task_list: Task[], container: econ.List<number>): std.Vec
 	let ret: std.Vector<number> = new std.Vector();
 
 	// LISTENER FUNCTION
-	let listener: econ.List.Listener<number> = 
-		function (event: econ.List.Event<number>): void
+	let listener: ecol.ListCollection.Listener<number> = 
+		function (event: ecol.ListCollection.Event<number>): void
 		{
 			for (let it = event.first; !it.equals(event.last); it = it.next())
 			{
@@ -96,9 +96,9 @@ export function test_linear_containers(): void
 		["refresh", 0, 50] // 219
 	];
 	
-	let vec: econ.Vector<number> = new econ.Vector();
-	let deq: econ.Deque<number> = new econ.Deque();
-	let list: econ.List<number> = new econ.List();
+	let vec: ecol.ArrayCollection<number> = new ecol.ArrayCollection();
+	let deq: ecol.DequeCollection<number> = new ecol.DequeCollection();
+	let list: ecol.ListCollection<number> = new ecol.ListCollection();
 
 	let r1 = process_tasks(tasks, vec as any);
 	let r2 = process_tasks(tasks, deq as any);
@@ -109,5 +109,5 @@ export function test_linear_containers(): void
 		throw new std.LogicError("Error on TSTL");
 	else if (std.equal(r1.begin(), r1.end(), r2.begin()) == false ||
 		std.equal(r1.begin(), r1.end(), r3.begin()) == false)
-		throw new std.DomainError("Error on ECON");
+		throw new std.DomainError("Error on ECOL");
 }

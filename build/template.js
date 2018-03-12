@@ -6,7 +6,7 @@ function manipulate(path, derives)
 	for (let type of derives)
 	{
 		let my_content = content.split("Source").join(type);
-		fs.writeFileSync(`${path}/${type}.ts`, my_content, "utf8");
+		fs.writeFileSync(`${path}/${type}Collection.ts`, my_content, "utf8");
 	}
 }
 

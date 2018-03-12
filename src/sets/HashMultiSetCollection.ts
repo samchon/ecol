@@ -4,14 +4,14 @@ import {ICollection} from "../basic/ICollection";
 import {CollectionEvent} from "../basic/CollectionEvent";
 import {EventDispatcher} from "../basic/EventDispatcher";
 
-export class SourceCollection<T> 
-	extends std.Source<T>
-	implements ICollection<T, std.Source<T>, std.Source.Iterator<T>, std.Source.ReverseIterator<T>>
+export class HashMultiSetCollection<T> 
+	extends std.HashMultiSet<T>
+	implements ICollection<T, std.HashMultiSet<T>, std.HashMultiSet.Iterator<T>, std.HashMultiSet.ReverseIterator<T>>
 {
 	/**
 	 * @hidden
 	 */
-	private dispatcher_: EventDispatcher<T, std.Source<T>, std.Source.Iterator<T>, std.Source.ReverseIterator<T>> = new EventDispatcher();
+	private dispatcher_: EventDispatcher<T, std.HashMultiSet<T>, std.HashMultiSet.Iterator<T>, std.HashMultiSet.ReverseIterator<T>> = new EventDispatcher();
 
 	/* ---------------------------------------------------------
 		CONSTRUCTORS
@@ -33,7 +33,7 @@ export class SourceCollection<T>
 	/**
 	 * @hidden
 	 */
-	protected _Handle_insert(first: std.Source.Iterator<T>, last: std.Source.Iterator<T>): void
+	protected _Handle_insert(first: std.HashMultiSet.Iterator<T>, last: std.HashMultiSet.Iterator<T>): void
 	{
 		super._Handle_insert(first, last);
 		
@@ -43,7 +43,7 @@ export class SourceCollection<T>
 	/**
 	 * @hidden
 	 */
-	protected _Handle_erase(first: std.Source.Iterator<T>, last: std.Source.Iterator<T>): void
+	protected _Handle_erase(first: std.HashMultiSet.Iterator<T>, last: std.HashMultiSet.Iterator<T>): void
 	{
 		this._Handle_erase(first, last);
 		
@@ -60,7 +60,7 @@ export class SourceCollection<T>
 	/**
 	 * @inheritDoc
 	 */
-	public dispatchEvent(event: SourceCollection.Event<T>): void
+	public dispatchEvent(event: HashMultiSetCollection.Event<T>): void
 	{
 		if (this.dispatcher_)
 			this.dispatcher_.dispatchEvent(event);
@@ -74,14 +74,14 @@ export class SourceCollection<T>
 	/**
 	 * @inheritDoc
 	 */
-	public refresh(it: std.Source.Iterator<T>): void;
+	public refresh(it: std.HashMultiSet.Iterator<T>): void;
 
 	/**
 	 * @inheritDoc
 	 */
-	public refresh(first: std.Source.Iterator<T>, last: std.Source.Iterator<T>): void;
+	public refresh(first: std.HashMultiSet.Iterator<T>, last: std.HashMultiSet.Iterator<T>): void;
 
-	public refresh(first: std.Source.Iterator<T> = null, last: std.Source.Iterator<T> = null): void
+	public refresh(first: std.HashMultiSet.Iterator<T> = null, last: std.HashMultiSet.Iterator<T> = null): void
 	{
 		if (first == null)
 		{
@@ -108,7 +108,7 @@ export class SourceCollection<T>
 	/**
 	 * @inheritDoc
 	 */
-	public addEventListener(type: CollectionEvent.Type, listener: SourceCollection.Listener<T>): void
+	public addEventListener(type: CollectionEvent.Type, listener: HashMultiSetCollection.Listener<T>): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
@@ -116,29 +116,29 @@ export class SourceCollection<T>
 	/**
 	 * @inheritDoc
 	 */
-	public removeEventListener(type: CollectionEvent.Type, listener: SourceCollection.Listener<T>): void
+	public removeEventListener(type: CollectionEvent.Type, listener: HashMultiSetCollection.Listener<T>): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
 	}
 }
 
-export namespace SourceCollection
+export namespace HashMultiSetCollection
 {
-	export type Event<T> = CollectionEvent<T, std.Source<T>, std.Source.Iterator<T>, std.Source.ReverseIterator<T>>;
-	export type Listener<T> = CollectionEvent.Listener<T, std.Source<T>, std.Source.Iterator<T>, std.Source.ReverseIterator<T>>;
+	export type Event<T> = CollectionEvent<T, std.HashMultiSet<T>, std.HashMultiSet.Iterator<T>, std.HashMultiSet.ReverseIterator<T>>;
+	export type Listener<T> = CollectionEvent.Listener<T, std.HashMultiSet<T>, std.HashMultiSet.Iterator<T>, std.HashMultiSet.ReverseIterator<T>>;
 
 	export const Event = CollectionEvent;
-	export import Iterator = std.Source.Iterator;
-	export import ReverseIterator = std.Source.ReverseIterator;
+	export import Iterator = std.HashMultiSet.Iterator;
+	export import ReverseIterator = std.HashMultiSet.ReverseIterator;
 }
 
-const old_swap = std.Source.prototype.swap;
-std.Source.prototype.swap = function <T>(obj: std.Source<T>): void
+const old_swap = std.HashMultiSet.prototype.swap;
+std.HashMultiSet.prototype.swap = function <T>(obj: std.HashMultiSet<T>): void
 {
 	old_swap.call(this, obj);
 
-	if (this instanceof SourceCollection)
+	if (this instanceof HashMultiSetCollection)
 		this.refresh();
-	if (obj instanceof SourceCollection)
+	if (obj instanceof HashMultiSetCollection)
 		obj.refresh();
 };

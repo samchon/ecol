@@ -5,4 +5,4 @@ npm run build # COMPILE MODULE & TESTING UNIT AND RUN TEST.
 npm run test # RUN TEST ONLY
 ```
 
-Learn more about the [CONTRIBUTING](https://github.com/samchon/econ/blob/master/CONTRIBUTING.md)
+Learn more about the [CONTRIBUTING](https://github.com/samchon/ecol/blob/master/CONTRIBUTING.md)

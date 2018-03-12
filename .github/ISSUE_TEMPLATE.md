@@ -1,30 +1,30 @@
-# ECON Issue Template
+# ECOL Issue Template
 When publishing an issue, erase this content and fill your story.
 
-You also can learn more with the [CONTRIBUTING.md](https://github.com/samchon/econ/blob/master/CONTRIBUTING.md)
+You also can learn more with the [CONTRIBUTING.md](https://github.com/samchon/ecol/blob/master/CONTRIBUTING.md)
 
 ## Question
-I always welcome any questions about the **ECON**. However, half of questions can be solved by traveling [Guide Documents](https://github.com/samhon/econ/wiki), [FAQ](https://github.com/samhon/econ/wiki/FAQ) section, or old [Issues](https://github.com/samchon/econ/search?type=Issues). Please visit them before. If you have a question have not treated and you're urgently, then you also can utilize the [Gitter Channel](https://gitter.im/samchon/econ).
+I always welcome any questions about the **ECOL**. However, half of questions can be solved by traveling [Guide Documents](https://github.com/samhon/ecol/wiki), [FAQ](https://github.com/samhon/ecol/wiki/FAQ) section, or old [Issues](https://github.com/samchon/ecol/search?type=Issues). Please visit them before. If you have a question have not treated and you're urgently, then you also can utilize the [Gitter Channel](https://gitter.im/samchon/ecol).
 
 
 
 ## Bug Report
-Note that, the bug you're reporting may have registered in the [Issues](https://github.com/samchon/econ/search?type=Issues) by another user. Even the bug you're reporting may be fixed in the `@next` version. In those reasons, I recommend you to check the old [Issues](https://github.com/samchon/econ/search?type=Issues) and reproduct your code with the `@next` version before publishing the bug reporting issue. Also, 
+Note that, the bug you're reporting may have registered in the [Issues](https://github.com/samchon/ecol/search?type=Issues) by another user. Even the bug you're reporting may be fixed in the `@next` version. In those reasons, I recommend you to check the old [Issues](https://github.com/samchon/ecol/search?type=Issues) and reproduct your code with the `@next` version before publishing the bug reporting issue. Also, 
 
 ```bash
-`npm install --save econ@next`
+`npm install --save ecol@next`
 ```
 
 When same error occurs with the `@next` version, then please fill the below template:
 
 **Summary**:
-  - **ECON Version**: 1.0.0@dev-20180302
+  - **ECOL Version**: 1.0.0@dev-20180302
   - **Expected behavior**: 
   - **Actual behavior**
 
 **Code occuring the bug**: 
 ```typescript
-import econ = require("econ");
+import ecol = require("ecol");
 
 /* Demonstration code occuring the bug you're reporting */
 ```

@@ -8,5 +8,6 @@ src/
 
 *.*ignore
 *.js.map
+.travis.yml
 tsconfig.json
 package-lock.json

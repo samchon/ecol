@@ -4,7 +4,7 @@ import {ICollection} from "../basic/ICollection";
 import {CollectionEvent} from "../basic/CollectionEvent";
 import {EventDispatcher} from "../basic/EventDispatcher";
 
-export class List<T> 
+export class ListCollection<T> 
 	extends std.List<T>
 	implements ICollection<T, std.List<T>, std.List.Iterator<T>, std.List.ReverseIterator<T>>
 {
@@ -126,7 +126,7 @@ export class List<T>
 	/**
 	 * @inheritdoc
 	 */
-	public dispatchEvent(event: List.Event<T>): void
+	public dispatchEvent(event: ListCollection.Event<T>): void
 	{
 		if (this.dispatcher_)
 			this.dispatcher_.dispatchEvent(event);
@@ -162,7 +162,7 @@ export class List<T>
 	/**
 	 * @inheritdoc
 	 */
-	public addEventListener(type: CollectionEvent.Type, listener: List.Listener<T>): void
+	public addEventListener(type: CollectionEvent.Type, listener: ListCollection.Listener<T>): void
 	{
 		this.dispatcher_.addEventListener(type, listener);
 	}
@@ -170,13 +170,13 @@ export class List<T>
 	/**
 	 * @inheritdoc
 	 */
-	public removeEventListener(type: CollectionEvent.Type, listener: List.Listener<T>): void
+	public removeEventListener(type: CollectionEvent.Type, listener: ListCollection.Listener<T>): void
 	{
 		this.dispatcher_.removeEventListener(type, listener);
 	}
 }
 
-export namespace List
+export namespace ListCollection
 {
 	export type Event<T> = CollectionEvent<T, std.List<T>, std.List.Iterator<T>, std.List.ReverseIterator<T>>;
 	export type Listener<T> = CollectionEvent.Listener<T, std.List<T>, std.List.Iterator<T>, std.List.ReverseIterator<T>>;
@@ -197,7 +197,7 @@ Object.defineProperty(std.List.Iterator.prototype, "value",
 	{
 		this.value_ = val;
 
-		if (this.source() instanceof List)
+		if (this.source() instanceof ListCollection)
 			this.source().refresh(this);
 	},
 	enumerable: true,
@@ -209,8 +209,8 @@ std.List.prototype.swap = function <T>(obj: std.List<T>): void
 {
 	old_swap.call(this, obj);
 
-	if (this instanceof List)
+	if (this instanceof ListCollection)
 		this.refresh();
-	if (obj instanceof List)
+	if (obj instanceof ListCollection)
 		obj.refresh();
 };

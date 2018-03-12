@@ -4,12 +4,12 @@ Thanks for your advise. Before publishing a issue, please check some components.
 
 ### 1. Search for duplicates
 Before publishing a issue, please check whether the duplicated issue exists or not.
-  - [Ordinary Issues](https://github.com/samchon/econ/issues)
+  - [Ordinary Issues](https://github.com/samchon/ecol/issues)
 
 ### 2. Did you find a bug?
 When you reporting a bug, then please write about those items:
 
-  - What version of ECON you're using
+  - What version of ECOL you're using
   - If possible, give me an isolated way to reproduce the behavior.
   - The behavior your expect to see, and the actual behavior.
 
@@ -47,7 +47,7 @@ When you detect an error, then throw exception such below:
 
 ```typescript
 import std = require("tstl");
-import econ = require("../index");
+import ecol = require("../index");
 
 export function test_my_logic(): void
 {

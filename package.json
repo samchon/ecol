@@ -1,5 +1,5 @@
 {
-  "name": "econ",
+  "name": "ecol",
   "description": "Event Collections",
   "author": {
     "name": "Jeongho Nam",
@@ -10,16 +10,16 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "build": "node build/template && tsc && node lib/tests",
+    "build": "node build/template && tsc && npm run test",
     "test": "node lib/tests"
   },
-  "homepage": "https://github.com/samchon/econ",
+  "homepage": "https://github.com/samchon/ecol",
   "repository": {
     "type": "git",
-    "url": "https://github.com/samchon/econ.git"
+    "url": "https://github.com/samchon/ecol.git"
   },
   "bugs": {
-    "url": "https://github.com/samchon/econ/issues"
+    "url": "https://github.com/samchon/ecol/issues"
   },
   "licenses": [
     {
@@ -28,38 +28,17 @@
     }
   ],
   "keywords": [
-    "STL",
-    "TSTL",
-    "standard template library",
-    "event",
-    "container",
-    "iterator",
-    "vector",
-    "deque",
-    "list",
-    "vector_bool",
-    "set",
-    "multiset",
-    "unordered_set",
-    "unordered_multiset",
-    "map",
-    "multimap",
-    "unordered_map",
-    "unordered_multimap",
-    "VectorBoolean",
-    "TreeSet",
-    "TreeMultiSet",
-    "HashSet",
-    "HashMultiSet",
-    "TreeMap",
-    "TreeMultiMap",
-    "HashMap",
-    "HashMultiMap"
+    "STL", "TSTL", "standard template library",
+    "event", "collection", "iterator",
+
+    "VectorCollection", "ListCollection", "DequeCollection",
+    "TreeSetCollection", "TreeMultiSetCollection", "HashSetCollection", "HashMultiSetCollection",
+    "TreeMapCollection", "TreeMultiMapCollection", "HashMapCollection", "HashMultiMapCollection"
   ],
   "dependencies": {
-    "tstl": ">= 1.7.7"
+    "tstl": ">= 1.7.9"
   },
   "devDependencies": {
-    "@types/node": "~x.x.x"
+    "@types/node": "^9.4.7"
   }
 }
