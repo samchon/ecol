@@ -1,4 +1,6 @@
 # **E**vent **Col**lections
+
+[![Join the chat at https://gitter.im/samchon/ecol](https://badges.gitter.im/samchon/ecol.svg)](https://gitter.im/samchon/ecol?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/samchon/ecol.svg?branch=master)](https://travis-ci.org/samchon/ecol)
 [![npm version](https://badge.fury.io/js/ecol.svg)](https://www.npmjs.com/package/ecol)
 [![Downloads](https://img.shields.io/npm/dm/ecol.svg)](https://www.npmjs.com/package/ecol)
