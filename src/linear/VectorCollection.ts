@@ -124,12 +124,12 @@ export class ArrayCollection<T>
 
 	public refresh(first: std.Vector.Iterator<T> = null, last: std.Vector.Iterator<T> = null): void
 	{
-		if (first == null)
+		if (first === null)
 		{
 			first = this.begin();
 			last = this.end();
 		}
-		else if (last == null)
+		else if (last === null)
 			last = first.next();
 
 		this.dispatchEvent(new CollectionEvent("refresh", first, last));

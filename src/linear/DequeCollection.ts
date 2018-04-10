@@ -132,12 +132,12 @@ export class DequeCollection<T>
 
 	public refresh(first: std.Deque.Iterator<T> = null, last: std.Deque.Iterator<T> = null): void
 	{
-		if (first == null)
+		if (first === null)
 		{
 			first = this.begin();
 			last = this.end();
 		}
-		else if (last == null)
+		else if (last === null)
 			last = first.next();
 
 		this.dispatchEvent(new CollectionEvent("refresh", first, last));

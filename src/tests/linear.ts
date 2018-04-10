@@ -24,9 +24,9 @@ function process_tasks(task_list: Task[], container: ecol.ListCollection<number>
 			for (let it = event.first; !it.equals(event.last); it = it.next())
 			{
 				let val: number = it.value;
-				if (event.type == "erase")
+				if (event.type === "erase")
 					val *= -1;
-				else if (event.type == "refresh")
+				else if (event.type === "refresh")
 					val = 1 / val;
 
 				ret.push_back(val);
@@ -49,7 +49,7 @@ function process_tasks(task_list: Task[], container: ecol.ListCollection<number>
 	{
 		let it = std.advance(container.begin(), task[1]);
 
-		if (task[0] == "insert")
+		if (task[0] === "insert")
 		{
 			let size: number = task[2];
 			let p: number = Math.random();
@@ -65,12 +65,12 @@ function process_tasks(task_list: Task[], container: ecol.ListCollection<number>
 				container.insert(it, std.begin(elements), std.end(elements));
 			}
 		}
-		else if (task[0] == "set")
+		else if (task[0] === "set")
 			it.value = task[2];
 		else
 		{
 			let last = std.advance(container.begin(), task[2]);
-			if (task[0] == "erase")
+			if (task[0] === "erase")
 				container.erase(it, last);
 			else
 				container.refresh(it, last);
@@ -104,10 +104,10 @@ export function test_linear_containers(): void
 	let r2 = process_tasks(tasks, deq as any);
 	let r3 = process_tasks(tasks, list);
 
-	if (std.equal(vec.begin(), vec.end(), deq.begin()) == false ||
-		std.equal(vec.begin(), vec.end(), list.begin()) == false)
+	if (std.equal(vec.begin(), vec.end(), deq.begin()) === false ||
+		std.equal(vec.begin(), vec.end(), list.begin()) === false)
 		throw new std.LogicError("Error on TSTL");
-	else if (std.equal(r1.begin(), r1.end(), r2.begin()) == false ||
-		std.equal(r1.begin(), r1.end(), r3.begin()) == false)
+	else if (std.equal(r1.begin(), r1.end(), r2.begin()) === false ||
+		std.equal(r1.begin(), r1.end(), r3.begin()) === false)
 		throw new std.DomainError("Error on ECOL");
 }

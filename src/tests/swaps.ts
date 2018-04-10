@@ -21,6 +21,6 @@ export function test_swaps()
 	x.swap(y);
 	y.swap(x);
 
-	if (sum != 6 * 7 / 2)
+	if (sum !== 6 * 7 / 2)
 		throw new std.DomainError("Error on collection.swap().");
 }

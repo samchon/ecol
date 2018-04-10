@@ -6,7 +6,7 @@
     "email": "samchon@samchon.org",
     "url": "http://samchon.org"
   },
-  "version": "1.0.0",
+  "version": "1.0.1-dev.20180410",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
@@ -28,15 +28,26 @@
     }
   ],
   "keywords": [
-    "STL", "TSTL", "standard template library",
-    "event", "collection", "iterator",
-
-    "VectorCollection", "ListCollection", "DequeCollection",
-    "TreeSetCollection", "TreeMultiSetCollection", "HashSetCollection", "HashMultiSetCollection",
-    "TreeMapCollection", "TreeMultiMapCollection", "HashMapCollection", "HashMultiMapCollection"
+    "STL",
+    "TSTL",
+    "standard template library",
+    "event",
+    "collection",
+    "iterator",
+    "VectorCollection",
+    "ListCollection",
+    "DequeCollection",
+    "TreeSetCollection",
+    "TreeMultiSetCollection",
+    "HashSetCollection",
+    "HashMultiSetCollection",
+    "TreeMapCollection",
+    "TreeMultiMapCollection",
+    "HashMapCollection",
+    "HashMultiMapCollection"
   ],
   "dependencies": {
-    "tstl": ">= 1.7.9"
+    "tstl": "^1.7.11-dev.20180409"
   },
   "devDependencies": {
     "@types/node": "^9.4.7"
