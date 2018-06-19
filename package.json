@@ -6,7 +6,7 @@
     "email": "samchon@samchon.org",
     "url": "http://samchon.org"
   },
-  "version": "1.0.1-dev.20180410",
+  "version": "1.0.1",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
@@ -47,7 +47,7 @@
     "HashMultiMapCollection"
   ],
   "dependencies": {
-    "tstl": "^1.7.11-dev.20180409"
+    "tstl": ">= 2.0.0"
   },
   "devDependencies": {
     "@types/node": "^9.4.7"

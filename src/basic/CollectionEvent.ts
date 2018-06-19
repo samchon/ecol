@@ -1,4 +1,5 @@
 import * as std from "tstl";
+import { ForOfAdaptor } from "tstl/base/iterators/ForOfAdaptor";
 
 export class CollectionEvent<T, 
 		SourceT extends std.base.Container<T, SourceT, IteratorT, ReverseT>,
@@ -19,7 +20,7 @@ export class CollectionEvent<T,
 
 	public [Symbol.iterator](): IterableIterator<T>
 	{
-		return new std.base.ForOfAdaptor(this.first, this.last);
+		return new ForOfAdaptor(this.first, this.last);
 	}
 }
 

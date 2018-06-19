@@ -1,18 +1,17 @@
 {
-    "compilerOptions": 
-    {
+    "compilerOptions": {
         "target": "es5",
-        "module": "commonjs",
-        "declaration": true,
-        "outDir": "lib",
-
         "sourceMap": true,
+        "declaration": true,
+        "declarationMap": true,
+        "outDir": "lib",
+        
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "downlevelIteration": true,
         
-        "lib":[
+        "lib": [
             "dom",
             "es2015"
         ]
