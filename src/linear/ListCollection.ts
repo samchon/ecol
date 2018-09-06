@@ -1,17 +1,21 @@
-import * as std from "tstl";
 
-import {ICollection} from "../basic/ICollection";
-import {CollectionEvent} from "../basic/CollectionEvent";
-import {EventDispatcher} from "../basic/EventDispatcher";
+import { List } from "tstl/container/List";
+import { IForwardIterator } from "tstl/iterator/IForwardIterator";
+import { advance } from "tstl/iterator/global";
+import { less } from "tstl/functional/comparators";
+
+import { ICollection } from "../basic/ICollection";
+import { CollectionEvent } from "../basic/CollectionEvent";
+import { EventDispatcher } from "../basic/EventDispatcher";
 
 export class ListCollection<T> 
-	extends std.List<T>
-	implements ICollection<T, std.List<T>, std.List.Iterator<T>, std.List.ReverseIterator<T>>
+	extends List<T>
+	implements ICollection<T, List<T>, List.Iterator<T>, List.ReverseIterator<T>>
 {
 	/**
 	 * @hidden
 	 */
-	private dispatcher_: EventDispatcher<T, std.List<T>, std.List.Iterator<T>, std.List.ReverseIterator<T>> = new EventDispatcher();
+	private dispatcher_: EventDispatcher<T, List<T>, List.Iterator<T>, List.ReverseIterator<T>> = new EventDispatcher();
 
 	/* ---------------------------------------------------------
 		CONSTRUCTORS
@@ -37,14 +41,14 @@ export class ListCollection<T>
 	/**
 	 * @hidden
 	 */
-	protected _Insert_by_range<U extends T, InputIterator extends std.IForwardIterator<U, InputIterator>>
-		(pos: std.List.Iterator<T>, first: InputIterator, last: InputIterator): std.List.Iterator<T>
+	protected _Insert_by_range<U extends T, InputIterator extends IForwardIterator<U, InputIterator>>
+		(pos: List.Iterator<T>, first: InputIterator, last: InputIterator): List.Iterator<T>
 	{
 		let n: number = this.size();
 		let ret = super._Insert_by_range(pos, first, last);
 
 		n = this.size() - n;
-		this._Notify_insert(ret, std.advance(ret, n));
+		this._Notify_insert(ret, advance(ret, n));
 
 		return ret;
 	}
@@ -52,7 +56,7 @@ export class ListCollection<T>
 	/**
 	 * @hidden
 	 */
-	protected _Erase_by_range(first: std.List.Iterator<T>, last: std.List.Iterator<T>): std.List.Iterator<T>
+	protected _Erase_by_range(first: List.Iterator<T>, last: List.Iterator<T>): List.Iterator<T>
 	{
 		let ret = super._Erase_by_range(first, last);
 		this._Notify_erase(first, last);
@@ -73,7 +77,7 @@ export class ListCollection<T>
 	 */
 	public sort(comp: (x: T, y: T) => boolean): void;
 
-	public sort(comp: (x: T, y: T) => boolean = std.less): void
+	public sort(comp: (x: T, y: T) => boolean = less): void
 	{
 		super.sort(comp);
 		this.refresh();
@@ -103,14 +107,14 @@ export class ListCollection<T>
 	/**
 	 * @inheritdoc
 	 */
-	public refresh(it: std.List.Iterator<T>): void;
+	public refresh(it: List.Iterator<T>): void;
 
 	/**
 	 * @inheritdoc
 	 */
-	public refresh(first: std.List.Iterator<T>, last: std.List.Iterator<T>): void;
+	public refresh(first: List.Iterator<T>, last: List.Iterator<T>): void;
 
-	public refresh(first: std.List.Iterator<T> = null, last: std.List.Iterator<T> = null): void
+	public refresh(first: List.Iterator<T> = null, last: List.Iterator<T> = null): void
 	{
 		if (first === null)
 		{
@@ -135,7 +139,7 @@ export class ListCollection<T>
 	/**
 	 * @hidden
 	 */
-	private _Notify_insert(first: std.List.Iterator<T>, last: std.List.Iterator<T>): void
+	private _Notify_insert(first: List.Iterator<T>, last: List.Iterator<T>): void
 	{
 		this.dispatchEvent(new CollectionEvent("insert", first, last));
 	}
@@ -143,7 +147,7 @@ export class ListCollection<T>
 	/**
 	 * @hidden
 	 */
-	private _Notify_erase(first: std.List.Iterator<T>, last: std.List.Iterator<T>): void
+	private _Notify_erase(first: List.Iterator<T>, last: List.Iterator<T>): void
 	{
 		this.dispatchEvent(new CollectionEvent("erase", first, last));
 	}
@@ -178,16 +182,16 @@ export class ListCollection<T>
 
 export namespace ListCollection
 {
-	export type Event<T> = CollectionEvent<T, std.List<T>, std.List.Iterator<T>, std.List.ReverseIterator<T>>;
-	export type Listener<T> = CollectionEvent.Listener<T, std.List<T>, std.List.Iterator<T>, std.List.ReverseIterator<T>>;
+	export type Event<T> = CollectionEvent<T, List<T>, List.Iterator<T>, List.ReverseIterator<T>>;
+	export type Listener<T> = CollectionEvent.Listener<T, List<T>, List.Iterator<T>, List.ReverseIterator<T>>;
 
 	export const Event = CollectionEvent;
 
-	export import Iterator = std.List.Iterator;
-	export import ReverseIterator = std.List.ReverseIterator;
+	export import Iterator = List.Iterator;
+	export import ReverseIterator = List.ReverseIterator;
 }
 
-Object.defineProperty(std.List.Iterator.prototype, "value",
+Object.defineProperty(List.Iterator.prototype, "value",
 {
 	get: function () 
 	{
@@ -204,8 +208,8 @@ Object.defineProperty(std.List.Iterator.prototype, "value",
 	configurable: true
 });
 
-const old_swap = std.List.prototype.swap;
-std.List.prototype.swap = function <T>(obj: std.List<T>): void
+const old_swap = List.prototype.swap;
+List.prototype.swap = function <T>(obj: List<T>): void
 {
 	old_swap.call(this, obj);
 

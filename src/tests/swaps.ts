@@ -1,5 +1,5 @@
-import std = require("tstl");
-import ecol = require("../index");
+import * as std from "tstl";
+import * as ecol from "../index";
 
 export function test_swaps()
 {

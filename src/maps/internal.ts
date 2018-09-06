@@ -1,7 +1,7 @@
-import * as std from "tstl";
-import {EventDispatcher} from "../basic/EventDispatcher";
+import { MapIterator } from "tstl/base/iterator/MapIterator";
+import { EventDispatcher } from "../basic/EventDispatcher";
 
-Object.defineProperty(std.base.MapIterator.prototype, "second",
+Object.defineProperty(MapIterator.prototype, "second",
 {
 	get: function () 
 	{

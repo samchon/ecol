@@ -1,11 +1,13 @@
-import * as std from "tstl";
+import { Container } from "tstl/base/container/Container";
+import { Iterator } from "tstl/base/iterator/Iterator";
+import { ReverseIterator } from "tstl/base/iterator/ReverseIterator";
 
-import {CollectionEvent} from "./CollectionEvent";
+import { CollectionEvent } from "./CollectionEvent";
 
 export interface IEventDispatcher<T, 
-		SourceT extends std.base.Container<T, SourceT, IteratorT, ReverseT>,
-		IteratorT extends std.base.Iterator<T, SourceT, IteratorT, ReverseT>,
-		ReverseT extends std.base.ReverseIterator<T, SourceT, IteratorT, ReverseT>>
+		SourceT extends Container<T, SourceT, IteratorT, ReverseT>,
+		IteratorT extends Iterator<T, SourceT, IteratorT, ReverseT>,
+		ReverseT extends ReverseIterator<T, SourceT, IteratorT, ReverseT>>
 {
 	hasEventListener(type: CollectionEvent.Type): boolean;
 	

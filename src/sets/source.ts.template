@@ -1,17 +1,17 @@
-import * as std from "tstl";
+import { Source } from "tstl/container/Source";
 
-import {ICollection} from "../basic/ICollection";
-import {CollectionEvent} from "../basic/CollectionEvent";
-import {EventDispatcher} from "../basic/EventDispatcher";
+import { ICollection } from "../basic/ICollection";
+import { CollectionEvent } from "../basic/CollectionEvent";
+import { EventDispatcher } from "../basic/EventDispatcher";
 
 export class SourceCollection<T> 
-	extends std.Source<T>
-	implements ICollection<T, std.Source<T>, std.Source.Iterator<T>, std.Source.ReverseIterator<T>>
+	extends Source<T>
+	implements ICollection<T, Source<T>, Source.Iterator<T>, Source.ReverseIterator<T>>
 {
 	/**
 	 * @hidden
 	 */
-	private dispatcher_: EventDispatcher<T, std.Source<T>, std.Source.Iterator<T>, std.Source.ReverseIterator<T>> = new EventDispatcher();
+	private dispatcher_: EventDispatcher<T, Source<T>, Source.Iterator<T>, Source.ReverseIterator<T>> = new EventDispatcher();
 
 	/* ---------------------------------------------------------
 		CONSTRUCTORS
@@ -33,7 +33,7 @@ export class SourceCollection<T>
 	/**
 	 * @hidden
 	 */
-	protected _Handle_insert(first: std.Source.Iterator<T>, last: std.Source.Iterator<T>): void
+	protected _Handle_insert(first: Source.Iterator<T>, last: Source.Iterator<T>): void
 	{
 		super._Handle_insert(first, last);
 		
@@ -43,7 +43,7 @@ export class SourceCollection<T>
 	/**
 	 * @hidden
 	 */
-	protected _Handle_erase(first: std.Source.Iterator<T>, last: std.Source.Iterator<T>): void
+	protected _Handle_erase(first: Source.Iterator<T>, last: Source.Iterator<T>): void
 	{
 		this._Handle_erase(first, last);
 		
@@ -74,14 +74,14 @@ export class SourceCollection<T>
 	/**
 	 * @inheritDoc
 	 */
-	public refresh(it: std.Source.Iterator<T>): void;
+	public refresh(it: Source.Iterator<T>): void;
 
 	/**
 	 * @inheritDoc
 	 */
-	public refresh(first: std.Source.Iterator<T>, last: std.Source.Iterator<T>): void;
+	public refresh(first: Source.Iterator<T>, last: Source.Iterator<T>): void;
 
-	public refresh(first: std.Source.Iterator<T> = null, last: std.Source.Iterator<T> = null): void
+	public refresh(first: Source.Iterator<T> = null, last: Source.Iterator<T> = null): void
 	{
 		if (first === null)
 		{
@@ -124,16 +124,16 @@ export class SourceCollection<T>
 
 export namespace SourceCollection
 {
-	export type Event<T> = CollectionEvent<T, std.Source<T>, std.Source.Iterator<T>, std.Source.ReverseIterator<T>>;
-	export type Listener<T> = CollectionEvent.Listener<T, std.Source<T>, std.Source.Iterator<T>, std.Source.ReverseIterator<T>>;
+	export type Event<T> = CollectionEvent<T, Source<T>, Source.Iterator<T>, Source.ReverseIterator<T>>;
+	export type Listener<T> = CollectionEvent.Listener<T, Source<T>, Source.Iterator<T>, Source.ReverseIterator<T>>;
 
 	export const Event = CollectionEvent;
-	export import Iterator = std.Source.Iterator;
-	export import ReverseIterator = std.Source.ReverseIterator;
+	export import Iterator = Source.Iterator;
+	export import ReverseIterator = Source.ReverseIterator;
 }
 
-const old_swap = std.Source.prototype.swap;
-std.Source.prototype.swap = function <T>(obj: std.Source<T>): void
+const old_swap = Source.prototype.swap;
+Source.prototype.swap = function <T>(obj: Source<T>): void
 {
 	old_swap.call(this, obj);
 

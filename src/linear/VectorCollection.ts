@@ -1,17 +1,18 @@
-import * as std from "tstl";
+import { Vector } from "tstl/container/Vector";
+import { IForwardIterator } from "tstl/iterator/IForwardIterator";
 
-import {ICollection} from "../basic/ICollection";
-import {CollectionEvent} from "../basic/CollectionEvent";
-import {EventDispatcher} from "../basic/EventDispatcher";
+import { ICollection } from "../basic/ICollection";
+import { CollectionEvent } from "../basic/CollectionEvent";
+import { EventDispatcher } from "../basic/EventDispatcher";
 
 export class ArrayCollection<T> 
-	extends std.Vector<T>
-	implements ICollection<T, std.Vector<T>, std.Vector.Iterator<T>, std.Vector.ReverseIterator<T>>
+	extends Vector<T>
+	implements ICollection<T, Vector<T>, Vector.Iterator<T>, Vector.ReverseIterator<T>>
 {
 	/**
 	 * @hidden
 	 */
-	private dispatcher_: EventDispatcher<T, std.Vector<T>, std.Vector.Iterator<T>, std.Vector.ReverseIterator<T>> = new EventDispatcher();
+	private dispatcher_: EventDispatcher<T, Vector<T>, Vector.Iterator<T>, Vector.ReverseIterator<T>> = new EventDispatcher();
 
 	/* ---------------------------------------------------------
 		CONSTRUCTORS
@@ -60,8 +61,8 @@ export class ArrayCollection<T>
 	/**
 	 * @hidden
 	 */
-	protected _Insert_by_range<U extends T, InputIterator extends std.IForwardIterator<U, InputIterator>>
-		(pos: std.Vector.Iterator<T>, first: InputIterator, last: InputIterator): std.Vector.Iterator<T>
+	protected _Insert_by_range<U extends T, InputIterator extends IForwardIterator<U, InputIterator>>
+		(pos: Vector.Iterator<T>, first: InputIterator, last: InputIterator): Vector.Iterator<T>
 	{
 		let n: number = this.size();
 		let ret = super._Insert_by_range(pos, first, last);
@@ -88,7 +89,7 @@ export class ArrayCollection<T>
 	/**
 	 * @hidden
 	 */
-	protected _Erase_by_range(first: std.Vector.Iterator<T>, last: std.Vector.Iterator<T>): std.Vector.Iterator<T>
+	protected _Erase_by_range(first: Vector.Iterator<T>, last: Vector.Iterator<T>): Vector.Iterator<T>
 	{
 		this._Notify_erase(first, last);
 
@@ -115,14 +116,14 @@ export class ArrayCollection<T>
 	/**
 	 * @inheritdoc
 	 */
-	public refresh(it: std.Vector.Iterator<T>): void;
+	public refresh(it: Vector.Iterator<T>): void;
 
 	/**
 	 * @inheritdoc
 	 */
-	public refresh(first: std.Vector.Iterator<T>, last: std.Vector.Iterator<T>): void;
+	public refresh(first: Vector.Iterator<T>, last: Vector.Iterator<T>): void;
 
-	public refresh(first: std.Vector.Iterator<T> = null, last: std.Vector.Iterator<T> = null): void
+	public refresh(first: Vector.Iterator<T> = null, last: Vector.Iterator<T> = null): void
 	{
 		if (first === null)
 		{
@@ -154,7 +155,7 @@ export class ArrayCollection<T>
 	/**
 	 * @hidden
 	 */
-	private _Notify_insert(first: std.Vector.Iterator<T>, last: std.Vector.Iterator<T>): void
+	private _Notify_insert(first: Vector.Iterator<T>, last: Vector.Iterator<T>): void
 	{
 		this.dispatchEvent(new CollectionEvent("insert", first, last));
 	}
@@ -162,7 +163,7 @@ export class ArrayCollection<T>
 	/**
 	 * @hidden
 	 */
-	private _Notify_erase(first: std.Vector.Iterator<T>, last: std.Vector.Iterator<T>): void
+	private _Notify_erase(first: Vector.Iterator<T>, last: Vector.Iterator<T>): void
 	{
 		this.dispatchEvent(new CollectionEvent("erase", first, last));
 	}
@@ -197,16 +198,16 @@ export class ArrayCollection<T>
 
 export namespace ArrayCollection
 {
-	export type Event<T> = CollectionEvent<T, std.Vector<T>, std.Vector.Iterator<T>, std.Vector.ReverseIterator<T>>;
-	export type Listener<T> = CollectionEvent.Listener<T, std.Vector<T>, std.Vector.Iterator<T>, std.Vector.ReverseIterator<T>>;
+	export type Event<T> = CollectionEvent<T, Vector<T>, Vector.Iterator<T>, Vector.ReverseIterator<T>>;
+	export type Listener<T> = CollectionEvent.Listener<T, Vector<T>, Vector.Iterator<T>, Vector.ReverseIterator<T>>;
 
 	export const Event = CollectionEvent;
-	export import Iterator = std.Vector.Iterator;
-	export import ReverseIterator = std.Vector.ReverseIterator;
+	export import Iterator = Vector.Iterator;
+	export import ReverseIterator = Vector.ReverseIterator;
 }
 
-const old_swap = std.Vector.prototype.swap;
-std.Vector.prototype.swap = function <T>(obj: std.Vector<T>): void
+const old_swap = Vector.prototype.swap;
+Vector.prototype.swap = function <T>(obj: Vector<T>): void
 {
 	old_swap.call(this, obj);
 

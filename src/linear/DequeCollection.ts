@@ -1,17 +1,18 @@
-import * as std from "tstl";
+import { Deque } from "tstl/container/Deque";
+import { IForwardIterator } from "tstl/iterator/IForwardIterator";
 
-import {ICollection} from "../basic/ICollection";
-import {CollectionEvent} from "../basic/CollectionEvent";
-import {EventDispatcher} from "../basic/EventDispatcher";
+import { ICollection } from "../basic/ICollection";
+import { CollectionEvent } from "../basic/CollectionEvent";
+import { EventDispatcher } from "../basic/EventDispatcher";
 
 export class DequeCollection<T> 
-	extends std.Deque<T>
-	implements ICollection<T, std.Deque<T>, std.Deque.Iterator<T>, std.Deque.ReverseIterator<T>>
+	extends Deque<T>
+	implements ICollection<T, Deque<T>, Deque.Iterator<T>, Deque.ReverseIterator<T>>
 {
 	/**
 	 * @hidden
 	 */
-	private dispatcher_: EventDispatcher<T, std.Deque<T>, std.Deque.Iterator<T>, std.Deque.ReverseIterator<T>> = new EventDispatcher();
+	private dispatcher_: EventDispatcher<T, Deque<T>, Deque.Iterator<T>, Deque.ReverseIterator<T>> = new EventDispatcher();
 
 	/* ---------------------------------------------------------
 		CONSTRUCTORS
@@ -58,8 +59,8 @@ export class DequeCollection<T>
 	/**
 	 * @hidden
 	 */
-	protected _Insert_by_range<U extends T, InputIterator extends std.IForwardIterator<U, InputIterator>>
-		(pos: std.Deque.Iterator<T>, first: InputIterator, last: InputIterator): std.Deque.Iterator<T>
+	protected _Insert_by_range<U extends T, InputIterator extends IForwardIterator<U, InputIterator>>
+		(pos: Deque.Iterator<T>, first: InputIterator, last: InputIterator): Deque.Iterator<T>
 	{
 		let n: number = this.size();
 		let ret = super._Insert_by_range(pos, first, last);
@@ -96,7 +97,7 @@ export class DequeCollection<T>
 	/**
 	 * @hidden
 	 */
-	protected _Erase_by_range(first: std.Deque.Iterator<T>, last: std.Deque.Iterator<T>): std.Deque.Iterator<T>
+	protected _Erase_by_range(first: Deque.Iterator<T>, last: Deque.Iterator<T>): Deque.Iterator<T>
 	{
 		this._Notify_erase(first, last);
 
@@ -123,14 +124,14 @@ export class DequeCollection<T>
 	/**
 	 * @inheritdoc
 	 */
-	public refresh(it: std.Deque.Iterator<T>): void;
+	public refresh(it: Deque.Iterator<T>): void;
 
 	/**
 	 * @inheritdoc
 	 */
-	public refresh(first: std.Deque.Iterator<T>, last: std.Deque.Iterator<T>): void;
+	public refresh(first: Deque.Iterator<T>, last: Deque.Iterator<T>): void;
 
-	public refresh(first: std.Deque.Iterator<T> = null, last: std.Deque.Iterator<T> = null): void
+	public refresh(first: Deque.Iterator<T> = null, last: Deque.Iterator<T> = null): void
 	{
 		if (first === null)
 		{
@@ -162,7 +163,7 @@ export class DequeCollection<T>
 	/**
 	 * @hidden
 	 */
-	private _Notify_insert(first: std.Deque.Iterator<T>, last: std.Deque.Iterator<T>): void
+	private _Notify_insert(first: Deque.Iterator<T>, last: Deque.Iterator<T>): void
 	{
 		this.dispatchEvent(new CollectionEvent("insert", first, last));
 	}
@@ -170,7 +171,7 @@ export class DequeCollection<T>
 	/**
 	 * @hidden
 	 */
-	private _Notify_erase(first: std.Deque.Iterator<T>, last: std.Deque.Iterator<T>): void
+	private _Notify_erase(first: Deque.Iterator<T>, last: Deque.Iterator<T>): void
 	{
 		this.dispatchEvent(new CollectionEvent("erase", first, last));
 	}
@@ -205,16 +206,16 @@ export class DequeCollection<T>
 
 export namespace DequeCollection
 {
-	export type Event<T> = CollectionEvent<T, std.Deque<T>, std.Deque.Iterator<T>, std.Deque.ReverseIterator<T>>;
-	export type Listener<T> = CollectionEvent.Listener<T, std.Deque<T>, std.Deque.Iterator<T>, std.Deque.ReverseIterator<T>>;
+	export type Event<T> = CollectionEvent<T, Deque<T>, Deque.Iterator<T>, Deque.ReverseIterator<T>>;
+	export type Listener<T> = CollectionEvent.Listener<T, Deque<T>, Deque.Iterator<T>, Deque.ReverseIterator<T>>;
 
 	export const Event = CollectionEvent;
-	export import Iterator = std.Deque.Iterator;
-	export import ReverseIterator = std.Deque.ReverseIterator;
+	export import Iterator = Deque.Iterator;
+	export import ReverseIterator = Deque.ReverseIterator;
 }
 
-const old_swap = std.Deque.prototype.swap;
-std.Deque.prototype.swap = function <T>(obj: std.Deque<T>): void
+const old_swap = Deque.prototype.swap;
+Deque.prototype.swap = function <T>(obj: Deque<T>): void
 {
 	old_swap.call(this, obj);
 
