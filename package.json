@@ -6,12 +6,12 @@
     "email": "samchon@samchon.org",
     "url": "http://samchon.org"
   },
-  "version": "1.0.3",
+  "version": "1.1.0-dev.20190724",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
     "build": "node build/template && tsc && npm run test",
-    "test": "node lib/tests"
+    "test": "node lib/test"
   },
   "homepage": "https://github.com/samchon/ecol",
   "repository": {
@@ -47,7 +47,7 @@
     "HashMultiMapCollection"
   ],
   "dependencies": {
-    "tstl": ">= 2.0.4"
+    "tstl": "^2.2.2-dev.20190724"
   },
   "devDependencies": {
     "@types/node": "^9.4.7"

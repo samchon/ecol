@@ -1,18 +1,23 @@
 const fs = require("fs");
 
-function manipulate(path, derives)
+function manipulate(path, containers)
 {
-	let content = fs.readFileSync(path + "/source.ts.template", "utf8");
-	for (let type of derives)
-	{
-		let my_content = content.split("Source").join(type);
-		fs.writeFileSync(`${path}/${type}Collection.ts`, my_content, "utf8");
-	}
+    let standard = containers[0];
+    let content = fs.readFileSync(`${path}/${standard}Collection.ts`, "utf8");
+
+    for (let i = 1; i < containers.length; ++i)
+    {
+        let target = containers[i];
+        let myContent = fs.readFileSync(`${path}/${target}Collection.ts`, "utf8");
+        myContent = content.split(standard).join(target);
+
+        fs.writeFileSync(`${path}/${target}Collection.ts`, myContent, "utf8");
+    }
 }
 
 function main()
 {
-	manipulate(__dirname + "/../src/sets", ["TreeSet", "TreeMultiSet", "HashSet", "HashMultiSet"]);
-	manipulate(__dirname + "/../src/maps", ["TreeMap", "TreeMultiMap", "HashMap", "HashMultiMap"]);
+    manipulate(__dirname + "/../src/sets", ["HashMultiSet", "HashSet", "TreeMultiSet", "TreeSet"]);
+    manipulate(__dirname + "/../src/maps", ["HashMap", "HashMultiMap", "TreeMap", "TreeMultiMap"]);
 }
 main();

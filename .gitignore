@@ -1,6 +1,4 @@
 node_modules/
 lib/
 
-src/sets/*Collection.ts
-src/maps/*Collection.ts
 package-lock.json
