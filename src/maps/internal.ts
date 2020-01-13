@@ -1,7 +1,7 @@
 import { EventDispatcher } from "../basic/EventDispatcher";
 
-import { MapElementList } from "tstl/internal/container/associative/MapElementList";
-import { MapElementVector } from "tstl/internal/container/associative/MapElementVector";
+import { MapElementList } from "tstl/base/container/MapElementList";
+import { MapElementVector } from "tstl/base/container/MapElementVector";
 
 for (let proto of [MapElementList.prototype, MapElementVector.prototype])
     Object.defineProperty(proto, "second",

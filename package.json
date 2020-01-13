@@ -47,7 +47,7 @@
     "HashMultiMapCollection"
   ],
   "dependencies": {
-    "tstl": "^2.2.3"
+    "tstl": "~2.2.3"
   },
   "devDependencies": {
     "@types/node": "^9.4.7"
