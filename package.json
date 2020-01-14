@@ -6,7 +6,7 @@
     "email": "samchon@samchon.org",
     "url": "http://samchon.org"
   },
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
@@ -21,12 +21,7 @@
   "bugs": {
     "url": "https://github.com/samchon/ecol/issues"
   },
-  "licenses": [
-    {
-      "type": "BSD-3-Clause",
-      "url": "https://opensource.org/licenses/BSD-3-Clause"
-    }
-  ],
+  "license": "MIT",
   "keywords": [
     "STL",
     "TSTL",
@@ -47,9 +42,10 @@
     "HashMultiMapCollection"
   ],
   "dependencies": {
-    "tstl": "^2.2.3"
+    "tstl": ">=2.4.0"
   },
   "devDependencies": {
-    "@types/node": "^9.4.7"
+    "@types/node": "^9.4.7",
+    "typescript": "^3.7.4"
   }
 }

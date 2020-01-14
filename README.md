@@ -1,8 +1,8 @@
 # **E**vent **Col**lections
-[![Build Status](https://travis-ci.org/samchon/ecol.svg?branch=master)](https://travis-ci.org/samchon/ecol)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/samchon/ecol/blob/master/LICENSE)
 [![npm version](https://badge.fury.io/js/ecol.svg)](https://www.npmjs.com/package/ecol)
 [![Downloads](https://img.shields.io/npm/dm/ecol.svg)](https://www.npmjs.com/package/ecol)
-[![DeepScan grade](https://deepscan.io/api/projects/2082/branches/10113/badge/grade.svg)](https://deepscan.io/dashboard#view=project&pid=2082&bid=10113)
+[![Build Status](https://github.com/samchon/ecol/workflows/build/badge.svg)](https://github.com/samchon/ecol/actions?query=workflow%3Abuild)
 [![Chat on Gitter](https://badges.gitter.im/samchon/ecol.svg)](https://gitter.im/samchon/ecol?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Extension of [TypeScript-STL](https://github.com/samchon/tstl) **Con**tainers dispatching **E**vents.

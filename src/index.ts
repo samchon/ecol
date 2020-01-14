@@ -8,7 +8,7 @@ export * from "./basic/EventDispatcher";
 // CONTAINERS
 //----
 // LINEAR
-export * from "./linear/VectorCollection";
+export * from "./linear/ArrayCollection";
 export * from "./linear/DequeCollection";
 export * from "./linear/ListCollection";
 

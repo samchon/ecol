@@ -1,22 +1,24 @@
-import * as std from "tstl";
+import { IContainer } from "tstl/base/container/IContainer";
+import { HashSet } from "tstl/container/HashSet";
+import { HashMap } from "tstl/container/HashMap";
 
-import {IEventDispatcher} from "./IEventDispatcher";
-import {CollectionEvent} from "./CollectionEvent";
+import { IEventDispatcher } from "./IEventDispatcher";
+import { CollectionEvent } from "./CollectionEvent";
 
 export class EventDispatcher<T, 
-        SourceT extends std.base.Container<T, SourceT, IteratorT, ReverseT>,
-        IteratorT extends std.base.Iterator<T, SourceT, IteratorT, ReverseT>,
-        ReverseT extends std.base.ReverseIterator<T, SourceT, IteratorT, ReverseT>>
+        SourceT extends IContainer<T, SourceT, IteratorT, ReverseT>,
+        IteratorT extends IContainer.Iterator<T, SourceT, IteratorT, ReverseT>,
+        ReverseT extends IContainer.ReverseIterator<T, SourceT, IteratorT, ReverseT>>
     implements IEventDispatcher<T, SourceT, IteratorT, ReverseT>
 {
     /**
      * @hidden
      */
-    private listeners_: std.HashMap<string, std.HashSet<CollectionEvent.Listener<T, SourceT, IteratorT, ReverseT>>>;
+    private listeners_: HashMap<string, HashSet<CollectionEvent.Listener<T, SourceT, IteratorT, ReverseT>>>;
 
     public constructor()
     {
-        this.listeners_ = new std.HashMap();
+        this.listeners_ = new HashMap();
     }
 
     public dispatchEvent(event: CollectionEvent<T, SourceT, IteratorT, ReverseT>): boolean
@@ -41,7 +43,7 @@ export class EventDispatcher<T,
     {
         let it = this.listeners_.find(type);
         if (it.equals(this.listeners_.end()))
-            it = this.listeners_.emplace(type, new std.HashSet()).first;
+            it = this.listeners_.emplace(type, new HashSet()).first;
 
         it.second.insert(listener);
     }
