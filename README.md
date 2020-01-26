@@ -4,6 +4,7 @@
 [![Downloads](https://img.shields.io/npm/dm/ecol.svg)](https://www.npmjs.com/package/ecol)
 [![Build Status](https://github.com/samchon/ecol/workflows/build/badge.svg)](https://github.com/samchon/ecol/actions?query=workflow%3Abuild)
 [![Chat on Gitter](https://badges.gitter.im/samchon/ecol.svg)](https://gitter.im/samchon/ecol?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsamchon%2Fecol.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsamchon%2Fecol?ref=badge_shield)
 
 Extension of [TypeScript-STL](https://github.com/samchon/tstl) **Con**tainers dispatching **E**vents.
 
@@ -92,3 +93,6 @@ main();
     - [API Documents](http://samchon.github.io/ecol/api)
   - **Dependency**
     - [TypeScript-STL](https://github.com/samchon/tstl)
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsamchon%2Fecol.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsamchon%2Fecol?ref=badge_large)
